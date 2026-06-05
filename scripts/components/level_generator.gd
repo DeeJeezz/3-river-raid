@@ -1,0 +1,149 @@
+class_name LevelGenerator
+extends Node2D
+
+# TODO: Переделать генерацию тайлов земли на террейн?
+
+const SOURCE_ID: int = 1
+const TERRAIN_SET: int = 0
+const GROUND_TERRAIN: int = 0
+const WATER_TERRAIN: int = 1
+
+@export_category("Camera settings")
+@export var camera: Camera2D
+
+@export_category("Tilemap settings")
+@export var tile_map: TileMapLayer
+@export_group("Water tiles")
+@export var water_tiles_coords: Array[Vector2i]
+@export_group("Ground tiles")
+@export var ground_tile_coords: Vector2i
+@export var ground_decoration_tiles_coords: Array[Vector2i]
+@export_range(0, 1, 0.1) var ground_decoration_possibility: float
+@export_group("Shore tiles")
+@export var left_shore_tile_coords: Vector2i
+@export var right_shore_tile_coords: Vector2i
+
+@export_category("Generator settings")
+@export var game_seed: int = 0
+@export var chunk_size: int = 16
+@export var delete_after_rows: int = 5
+@export_group("Enemy settings")
+@export var do_not_spawn_until_row: int = 10
+@export var spawn_threshold_rows: int = 5
+@export_subgroup("Possibilities")
+@export_range(0, 1, 0.01) var boat_possibility: float
+@export_group("River settings")
+@export var min_river_width: int
+@export var max_river_width: int
+@export_group("Segment settings")
+@export var min_segment_length: int
+@export var max_segment_length: int
+
+var _river_center: int
+var _river_width: int
+var _preloaded_rows_on_y: int
+var _tile_map_width: int
+var _tile_map_height: int
+
+var _segment_rows_left: int = 0
+var _enemy_spawned_last_row: int = 0
+
+
+@onready var boat_scene: PackedScene = preload("res://scenes/enemies/boat.tscn")
+
+
+func _ready() -> void:
+	seed(game_seed)
+	_tile_map_width = ceili(Constants.SCREEN_SIZE.x / Constants.TILE_SIZE)
+	_tile_map_height = ceili(Constants.SCREEN_SIZE.y / Constants.TILE_SIZE)
+	_river_center = floori(_tile_map_width * 0.5)
+	_river_width = randi_range(min_river_width, max_river_width)
+
+	# On level ready preload rows starting from -2 "y" coord.
+	_preload_chunk(-2)
+	
+	for y in range(_tile_map_height, -1, -chunk_size):
+		_generate_chunk(y)
+
+
+func _process(_delta: float) -> void:
+	_check_need_to_preload_rows()
+	_check_need_to_delete_rows()
+
+
+func _preload_chunk(start_y: int) -> void:
+	_generate_chunk(start_y)
+	_preloaded_rows_on_y = start_y - chunk_size
+	prints("Preloaded chunk", _preloaded_rows_on_y)
+
+
+func _check_need_to_preload_rows() -> void:
+	var tile_map_camera_position: Vector2i = tile_map.local_to_map(camera.position)
+	if abs(abs(_preloaded_rows_on_y) - abs(tile_map_camera_position.y)) < 30:
+		_preload_chunk(_preloaded_rows_on_y)
+
+
+func _check_need_to_delete_rows() -> void:
+	var screen_bottom_tile_map_position: Vector2i = tile_map.local_to_map(camera.position)
+	var y: int = screen_bottom_tile_map_position.y + floori(_tile_map_height * 0.5)
+	for x in range(_tile_map_width):
+		tile_map.erase_cell(Vector2i(x, y + delete_after_rows))
+
+	
+func _generate_chunk(start_y: int) -> void:
+	var water_coords: Array[Vector2i] = []
+	var ground_coords: Array[Vector2i] = []
+	for y in range(start_y + 1, start_y - chunk_size, -1):
+		_check_segment_ended()
+		# Calculating left and right borders of river.
+		var left: int = floori(_river_center - _river_width * 0.5)
+		var right: int = ceili(_river_center + _river_width * 0.5)
+		printt(y, left, right, _river_center, _river_width)
+		for x in range(-1, _tile_map_width + 1):
+			var tile_coords: Vector2i = Vector2i(x, y)
+			if x <= left or x >= right:
+				ground_coords.append(tile_coords)
+			else:
+				water_coords.append(tile_coords)
+		_maybe_spawn_content(y, left, right)
+				
+	tile_map.set_cells_terrain_connect(water_coords, TERRAIN_SET, WATER_TERRAIN)
+	tile_map.set_cells_terrain_connect(ground_coords, TERRAIN_SET, GROUND_TERRAIN)
+	
+
+func _check_segment_ended() -> void:
+	if _segment_rows_left > 0:
+		_segment_rows_left -= 1
+		return
+
+	_segment_rows_left = randi_range(min_segment_length, max_segment_length)
+	var river_center_offset: int = [-1, 1].pick_random()
+	var river_width_offset: int = [-1, 1].pick_random()
+	_river_center = clampi(
+		_river_center + river_center_offset,
+		16,
+		24
+	)
+	_river_width = clampi(
+		_river_width + river_width_offset,
+		min_river_width,
+		max_river_width,
+	)
+
+
+func _maybe_spawn_content(y: int, left: int, right: int) -> void:
+	# Not spawning enemies close to each other.
+	if _enemy_spawned_last_row > 0:
+		_enemy_spawned_last_row -= 1
+		return
+
+	# Not spawning enemies at the start of the level.
+	if y > _tile_map_height - do_not_spawn_until_row:
+		return
+
+	# Maybe spawn boat.
+	if randf() < boat_possibility:
+		var boat: Area2D = boat_scene.instantiate()
+		boat.position = tile_map.map_to_local(Vector2(randi_range(left + 2, right - 2), y))
+		add_child(boat)
+		_enemy_spawned_last_row = spawn_threshold_rows

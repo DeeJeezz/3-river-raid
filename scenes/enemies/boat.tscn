@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://7vrc42e748sl"]
+
+[ext_resource type="Script" uid="uid://d4l42sykx4lpv" path="res://scripts/boat.gd" id="1_vc84l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mkwoy"]
+size = Vector2(12, 12)
+
+[sub_resource type="Gradient" id="Gradient_mkwoy"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vc84l"]
+gradient = SubResource("Gradient_mkwoy")
+width = 12
+
+[node name="Boat" type="Area2D" unique_id=1141433055]
+collision_layer = 5
+collision_mask = 8
+script = ExtResource("1_vc84l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=937310278]
+shape = SubResource("RectangleShape2D_mkwoy")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1308339037]
+scale = Vector2(1, 12)
+texture = SubResource("GradientTexture1D_vc84l")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=612316807]
+rect = Rect2(-6, -6, 12, 12)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
