@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bb4vb8agwuhg4" path="res://assets/img/world/topdown.png" id="1_bfxgj"]
 [ext_resource type="Script" uid="uid://c823vhgmttis6" path="res://scripts/components/camera_follow.gd" id="3_dd0lh"]
 [ext_resource type="PackedScene" uid="uid://7vrc42e748sl" path="res://scenes/enemies/boat.tscn" id="3_dywbp"]
+[ext_resource type="Shader" uid="uid://bjlgwnaxnti3a" path="res://shaders/vignette.gdshader" id="4_1seuy"]
 [ext_resource type="PackedScene" uid="uid://cpgnsf3ny0nf4" path="res://scenes/player.tscn" id="4_bfxgj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dywbp"]
@@ -185,6 +186,13 @@ terrain_set_0/terrain_1/name = "Water"
 terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
 sources/1 = SubResource("TileSetAtlasSource_dywbp")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1seuy"]
+shader = ExtResource("4_1seuy")
+shader_parameter/alpha = 0.5
+shader_parameter/half_size = Vector2(0.41, 0.44)
+shader_parameter/corner_radius = 0.0
+shader_parameter/feather = 0.15
+
 [node name="Level1" type="Node2D" unique_id=213759439]
 
 [node name="Ground" type="TileMapLayer" parent="." unique_id=13921135]
@@ -207,3 +215,14 @@ target_offset = Vector2(0, -180)
 
 [node name="Player" parent="." unique_id=811327754 instance=ExtResource("4_bfxgj")]
 position = Vector2(320, 336)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=594619370]
+
+[node name="Vignette" type="ColorRect" parent="CanvasLayer" unique_id=315861015]
+material = SubResource("ShaderMaterial_1seuy")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)

@@ -41,9 +41,6 @@ var _segment_rows_left: int = 0
 var _enemy_spawned_last_row: int = 0
 
 
-#@onready var boat_scene: PackedScene = preload("res://scenes/enemies/boat.tscn")
-
-
 func _ready() -> void:
 	if not random_seed:
 		seed(game_seed)
@@ -88,7 +85,7 @@ func _check_need_to_delete_rows() -> void:
 func _generate_chunk(start_y: int) -> void:
 	var water_coords: Array[Vector2i] = []
 	var ground_coords: Array[Vector2i] = []
-	for y in range(start_y + 1, start_y - chunk_size, -1):
+	for y in range(start_y + 3, start_y - chunk_size, -1):
 		_check_segment_ended()
 		# Calculating left and right borders of river.
 		var left: int = floori(_river_center - _river_width * 0.5)

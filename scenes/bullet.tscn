@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://ip2px6p5eh4v"]
 
 [ext_resource type="Script" uid="uid://dmlj3wiyt5nbm" path="res://scripts/bullet.gd" id="1_mkf8s"]
-[ext_resource type="Texture2D" uid="uid://veoj8x7gagoa" path="res://assets/img/entities/Missile.png" id="2_y25gk"]
+[ext_resource type="Texture2D" uid="uid://bihm732wlelp8" path="res://assets/img/entities/plane/plane_bullet.png" id="2_y25gk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h1aey"]
-size = Vector2(4, 9)
+size = Vector2(2, 9)
 
 [node name="Bullet" type="Area2D" unique_id=1851238907]
 collision_layer = 8
@@ -16,10 +16,12 @@ position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_h1aey")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2030412093]
+position = Vector2(0, 0.5)
+scale = Vector2(2, 1.5000001)
 texture = ExtResource("2_y25gk")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1813745932]
-rect = Rect2(-2, -4, 4, 8)
+rect = Rect2(-1, -4, 2, 8)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -2,23 +2,26 @@ class_name Player
 extends Area2D
 
 const ACCELERATION: float = 150.0
+const DEFAULT_ANIMATION_SPEED: float = 1.0
 
 @export_category("Horizontal movement settings")
 @export var horizontal_speed: float = 150
-@export_group("Rotating settings")
-@export_range(0, 90, 1) var max_rorate_angle: float = 15.0
-@export var rotating_speed_degrees: float = 100.0
 @export_category("Vertical movement settings")
 @export var vertical_speed: float = 150
 @export var acceleration_speed: float = 300
 @export var braking_speed: float = 100
 @export_category("Shooting settings")
 @export var bullet_scene: PackedScene
-@export_range(0.5, 5, 0.05) var shoot_cooldown: float = 0.75
+@export_range(0, 5, 0.05) var shoot_cooldown: float = 0.75
+@export_category("Animation settings")
+@export var return_to_idle_animation_speed: float = -3.0
+@export var acceleration_animation_speed: float = 3.0
 
 var _can_shoot: bool = true
 var _target_speed: float
 var _speed: float
+var _previous_direction: float = 0
+var _current_animation_speed: float = DEFAULT_ANIMATION_SPEED
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -45,13 +48,35 @@ func destroy() -> void:
 	explosion.play_random_explosion()
 	explosion.animation_finished.connect(queue_free)
 
+func _play_turn_animation(direction: float) -> void:
+	if direction != _previous_direction:
+		if animated_sprite.animation_finished.is_connected(animated_sprite.play):
+			animated_sprite.animation_finished.disconnect(animated_sprite.play)
+		if direction < 0:
+			animated_sprite.play(&"turn_left", _current_animation_speed)
+			animated_sprite.animation_finished.connect(animated_sprite.play.bind(&"left_idle", _current_animation_speed))
+			collision_shape.scale.x = 0.5
+		elif direction > 0:
+			animated_sprite.play(&"turn_right", _current_animation_speed)
+			animated_sprite.animation_finished.connect(animated_sprite.play.bind(&"right_idle", _current_animation_speed))
+			collision_shape.scale.x = 0.5
+		else:
+			if _previous_direction < 0:
+				animated_sprite.play(&"turn_left", return_to_idle_animation_speed * _current_animation_speed, true)
+			elif _previous_direction > 0:
+				animated_sprite.play(&"turn_right", return_to_idle_animation_speed * _current_animation_speed, true)
+			animated_sprite.animation_finished.connect(animated_sprite.play.bind(&"idle", _current_animation_speed))
+			collision_shape.scale.x = 1
+		
+	_previous_direction = direction
+
 
 func _move(direction: float, delta: float) -> void:
 
-	rotation_degrees = move_toward(rotation_degrees, direction * max_rorate_angle, rotating_speed_degrees * delta)
-
-	position.x += direction * horizontal_speed * delta
-	position.y -= _speed * delta
+	_play_turn_animation(direction)
+	
+	position.x += floori(direction * horizontal_speed * delta)
+	position.y -= floori(_speed * delta)
 
 	_clamp_position()
 
@@ -81,16 +106,16 @@ func _handle_input(delta: float) -> void:
 
 	if Input.is_action_pressed(&"accelerate"):
 		_target_speed = acceleration_speed
-		animated_sprite.play(&"accelerate")
+		_current_animation_speed = acceleration_animation_speed
 	elif Input.is_action_just_released(&"accelerate"):
 		_target_speed = vertical_speed
-		animated_sprite.play(&"idle")
+		_current_animation_speed = DEFAULT_ANIMATION_SPEED
 	elif Input.is_action_pressed(&"brake"):
 		_target_speed = braking_speed
-		animated_sprite.play(&"brake")
+		_current_animation_speed = DEFAULT_ANIMATION_SPEED * 0.75
 	elif Input.is_action_just_released(&"brake"):
 		_target_speed = vertical_speed
-		animated_sprite.play(&"idle")
+		_current_animation_speed = DEFAULT_ANIMATION_SPEED
 
 
 func _clamp_position() -> void:

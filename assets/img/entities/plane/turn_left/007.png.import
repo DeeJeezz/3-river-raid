@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkhnfc7rg7lwd"
-path="res://.godot/imported/jet.png-d6ebc668659e5086cc37b3083eb0b398.ctex"
+uid="uid://dlqyouhug4t6q"
+path="res://.godot/imported/007.png-daa103e267402f025f4bfdce04e26140.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/entities/jet.png"
-dest_files=["res://.godot/imported/jet.png-d6ebc668659e5086cc37b3083eb0b398.ctex"]
+source_file="res://assets/img/entities/plane/turn_left/007.png"
+dest_files=["res://.godot/imported/007.png-daa103e267402f025f4bfdce04e26140.ctex"]
 
 [params]
 

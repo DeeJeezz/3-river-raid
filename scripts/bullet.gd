@@ -1,7 +1,7 @@
 class_name Bullet
 extends Area2D
 
-const SPEED: float = 400.0
+const SPEED: float = 450.0
 
 
 func _process(delta: float) -> void:
