@@ -75,8 +75,8 @@ func _move(direction: float, delta: float) -> void:
 
 	_play_turn_animation(direction)
 	
-	position.x += floori(direction * horizontal_speed * delta)
-	position.y -= floori(_speed * delta)
+	position.x += direction * horizontal_speed * delta
+	position.y -= _speed * delta
 
 	_clamp_position()
 
