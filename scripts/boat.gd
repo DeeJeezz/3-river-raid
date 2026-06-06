@@ -1,19 +1,24 @@
 extends Area2D
 
+var _destroying: bool = false
+
 @onready var explosion: Explosion = $Explosion
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var shadow_sprite: Sprite2D = $Shadow
 
 
-var _destroying: bool = false
+func _ready() -> void:
+	animated_sprite.play(Utils.get_random_animation_name(animated_sprite))
 
 
 func _destroy() -> void:
 	if _destroying:
 		return
+	animated_sprite.hide()
+	shadow_sprite.hide()
 	_destroying = true
 	collision_shape.set_deferred(&"disabled", true)
-	sprite.hide()
 	explosion.play_random_explosion()
 	explosion.animation_finished.connect(queue_free)
 

@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://bgnpdkdmvv13p"]
+
+[ext_resource type="Script" uid="uid://d4l42sykx4lpv" path="res://scripts/boat.gd" id="1_ys3tt"]
+[ext_resource type="PackedScene" uid="uid://dyj1255yixoff" path="res://scenes/components/explosion.tscn" id="2_3nglj"]
+[ext_resource type="Texture2D" uid="uid://bkdb35e5k741a" path="res://assets/img/entities/boats/boat_3/boat_3_shadow.png" id="2_iw87r"]
+[ext_resource type="Texture2D" uid="uid://b8j15gqertu5x" path="res://assets/img/entities/boats/boat_3/Boat3_water_animation_color1/Boat3_water_frame1.png" id="2_l8in6"]
+[ext_resource type="Texture2D" uid="uid://cqa3x3k6ewfa1" path="res://assets/img/entities/boats/boat_3/Boat3_water_animation_color1/Boat3_water_frame2.png" id="3_iw87r"]
+[ext_resource type="Texture2D" uid="uid://5sf24v1mvoph" path="res://assets/img/entities/boats/boat_3/Boat3_water_animation_color1/Boat3_water_frame3.png" id="4_n1uf0"]
+[ext_resource type="Texture2D" uid="uid://d1vu3xr0rfl8h" path="res://assets/img/entities/boats/boat_3/Boat3_water_animation_color1/Boat3_water_frame4.png" id="5_jashh"]
+[ext_resource type="Texture2D" uid="uid://2ge0j2x64qu1" path="res://assets/img/entities/boats/boat_3/Boat3_water_animation_color2/Boat3_water_frame1.png" id="6_rpeuv"]
+[ext_resource type="Texture2D" uid="uid://d0chggmqa5let" path="res://assets/img/entities/boats/boat_3/Boat3_water_animation_color2/Boat3_water_frame2.png" id="7_6g4fr"]
+[ext_resource type="Texture2D" uid="uid://cuvjtqi1p112m" path="res://assets/img/entities/boats/boat_3/Boat3_water_animation_color2/Boat3_water_frame3.png" id="8_03w62"]
+[ext_resource type="Texture2D" uid="uid://daal30ljh5s16" path="res://assets/img/entities/boats/boat_3/Boat3_water_animation_color2/Boat3_water_frame4.png" id="9_65jjx"]
+[ext_resource type="Texture2D" uid="uid://c84y1ppf4ylb7" path="res://assets/img/entities/boats/boat_3/Boat3_water_animation_color3/Boat3_water_frame1.png" id="10_it0lk"]
+[ext_resource type="Texture2D" uid="uid://btraucgmtfm3r" path="res://assets/img/entities/boats/boat_3/Boat3_water_animation_color3/Boat3_water_frame2.png" id="11_1gbfk"]
+[ext_resource type="Texture2D" uid="uid://pwdqw5lvwhlq" path="res://assets/img/entities/boats/boat_3/Boat3_water_animation_color3/Boat3_water_frame3.png" id="12_pnk4w"]
+[ext_resource type="Texture2D" uid="uid://ej8htvsywj5w" path="res://assets/img/entities/boats/boat_3/Boat3_water_animation_color3/Boat3_water_frame4.png" id="13_8ingo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mkwoy"]
+size = Vector2(40, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mff2v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_l8in6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_iw87r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_n1uf0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jashh")
+}],
+"loop": true,
+"name": &"1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_rpeuv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_6g4fr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_03w62")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_65jjx")
+}],
+"loop": true,
+"name": &"2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_it0lk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_1gbfk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_pnk4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_8ingo")
+}],
+"loop": true,
+"name": &"3",
+"speed": 5.0
+}]
+
+[node name="Boat3" type="Area2D" unique_id=1141433055]
+collision_layer = 5
+collision_mask = 8
+script = ExtResource("1_ys3tt")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=612316807]
+rect = Rect2(-17, -13, 33, 25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=937310278]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_mkwoy")
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=18924479]
+position = Vector2(-2.9999998, -3)
+rotation = -1.5707964
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("2_iw87r")
+
+[node name="Boat" type="AnimatedSprite2D" parent="." unique_id=187666675]
+position = Vector2(-2.019484e-28, 1.2037062e-35)
+rotation = -1.5707964
+scale = Vector2(0.35, 0.35)
+sprite_frames = SubResource("SpriteFrames_mff2v")
+animation = &"3"
+
+[node name="Explosion" parent="." unique_id=1450720340 instance=ExtResource("2_3nglj")]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

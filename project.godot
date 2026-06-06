@@ -19,6 +19,7 @@ config/icon="uid://3uw3rhogysj6"
 [autoload]
 
 Constants="*uid://d3id0lpsleymt"
+Utils="*uid://chhu2q7b77x68"
 
 [debug]
 
