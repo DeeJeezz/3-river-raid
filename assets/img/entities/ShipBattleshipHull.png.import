@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://k46npiq3pmsr"
-path="res://.godot/imported/explosion1.png-9de9e53a1e613d7ee143f1d254fe9501.ctex"
+uid="uid://ccjruxvy4xocc"
+path="res://.godot/imported/ShipBattleshipHull.png-fe9887e219863cbb98ef66e950afe33b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/explosion1.png"
-dest_files=["res://.godot/imported/explosion1.png-9de9e53a1e613d7ee143f1d254fe9501.ctex"]
+source_file="res://assets/img/entities/ShipBattleshipHull.png"
+dest_files=["res://.godot/imported/ShipBattleshipHull.png-fe9887e219863cbb98ef66e950afe33b.ctex"]
 
 [params]
 

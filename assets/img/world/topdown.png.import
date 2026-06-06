@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1xsrvdu1gqnv"
-path="res://.godot/imported/16dir_128x128_PirateBoat(@Pixel_Salvaje).png-4489d29145742d1c3a608f6d79488680.ctex"
+uid="uid://bb4vb8agwuhg4"
+path="res://.godot/imported/topdown.png-dac0980096d7efb03be39978137040ba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/16dir_128x128_PirateBoat(@Pixel_Salvaje).png"
-dest_files=["res://.godot/imported/16dir_128x128_PirateBoat(@Pixel_Salvaje).png-4489d29145742d1c3a608f6d79488680.ctex"]
+source_file="res://assets/img/world/topdown.png"
+dest_files=["res://.godot/imported/topdown.png-dac0980096d7efb03be39978137040ba.ctex"]
 
 [params]
 

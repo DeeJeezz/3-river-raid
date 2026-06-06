@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://dstgwn5lcmi7h"]
 
 [ext_resource type="PackedScene" uid="uid://b061gxxjptnm6" path="res://scenes/components/level_generator.tscn" id="1_4tcl0"]
-[ext_resource type="Texture2D" uid="uid://bb4vb8agwuhg4" path="res://assets/img/topdown.png" id="1_bfxgj"]
-[ext_resource type="PackedScene" uid="uid://cpgnsf3ny0nf4" path="res://scenes/player.tscn" id="3_dd0lh"]
+[ext_resource type="Texture2D" uid="uid://bb4vb8agwuhg4" path="res://assets/img/world/topdown.png" id="1_bfxgj"]
+[ext_resource type="Script" uid="uid://c823vhgmttis6" path="res://scripts/components/camera_follow.gd" id="3_dd0lh"]
+[ext_resource type="PackedScene" uid="uid://7vrc42e748sl" path="res://scenes/enemies/boat.tscn" id="3_dywbp"]
+[ext_resource type="PackedScene" uid="uid://cpgnsf3ny0nf4" path="res://scenes/player.tscn" id="4_bfxgj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dywbp"]
 texture = ExtResource("1_bfxgj")
@@ -191,22 +193,17 @@ tile_set = SubResource("TileSet_dd0lh")
 [node name="LevelGenerator" parent="." unique_id=723464361 node_paths=PackedStringArray("camera", "tile_map") instance=ExtResource("1_4tcl0")]
 camera = NodePath("../Camera2D")
 tile_map = NodePath("../Ground")
-water_tiles_coords = Array[Vector2i]([Vector2i(6, 11)])
-ground_tile_coords = Vector2i(5, 2)
-ground_decoration_tiles_coords = Array[Vector2i]([Vector2i(4, 1), Vector2i(5, 1), Vector2i(4, 2), Vector2i(6, 2)])
-ground_decoration_possibility = 0.1
-left_shore_tile_coords = Vector2i(2, 9)
-right_shore_tile_coords = Vector2i(0, 9)
-chunk_size = 8
-do_not_spawn_until_row = 30
-boat_possibility = 0.25
-min_river_width = 14
-max_river_width = 20
-min_segment_length = 3
-max_segment_length = 5
+boat_scenes = Array[PackedScene]([ExtResource("3_dywbp")])
+max_river_width = 14
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=702952690]
-visible = false
+[node name="Camera2D" type="Camera2D" parent="." unique_id=702952690 node_paths=PackedStringArray("target")]
 position = Vector2(320, 180)
+limit_enabled = false
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
+script = ExtResource("3_dd0lh")
+target = NodePath("../Player")
+target_offset = Vector2(0, -180)
 
-[node name="Player" parent="." unique_id=811327754 instance=ExtResource("3_dd0lh")]
+[node name="Player" parent="." unique_id=811327754 instance=ExtResource("4_bfxgj")]
+position = Vector2(320, 336)

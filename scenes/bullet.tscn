@@ -1,17 +1,10 @@
 [gd_scene format=3 uid="uid://ip2px6p5eh4v"]
 
 [ext_resource type="Script" uid="uid://dmlj3wiyt5nbm" path="res://scripts/bullet.gd" id="1_mkf8s"]
+[ext_resource type="Texture2D" uid="uid://veoj8x7gagoa" path="res://assets/img/entities/Missile.png" id="2_y25gk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h1aey"]
-size = Vector2(4, 12)
-
-[sub_resource type="Gradient" id="Gradient_mkf8s"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_y25gk"]
-gradient = SubResource("Gradient_mkf8s")
-width = 4
+size = Vector2(4, 9)
 
 [node name="Bullet" type="Area2D" unique_id=1851238907]
 collision_layer = 8
@@ -19,10 +12,14 @@ collision_mask = 4
 script = ExtResource("1_mkf8s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=134425852]
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_h1aey")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2030412093]
-scale = Vector2(1, 12)
-texture = SubResource("GradientTexture1D_y25gk")
+texture = ExtResource("2_y25gk")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1813745932]
+rect = Rect2(-2, -4, 4, 8)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

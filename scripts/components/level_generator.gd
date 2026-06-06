@@ -1,8 +1,6 @@
 class_name LevelGenerator
 extends Node2D
 
-# TODO: Переделать генерацию тайлов земли на террейн?
-
 const SOURCE_ID: int = 1
 const TERRAIN_SET: int = 0
 const GROUND_TERRAIN: int = 0
@@ -13,31 +11,25 @@ const WATER_TERRAIN: int = 1
 
 @export_category("Tilemap settings")
 @export var tile_map: TileMapLayer
-@export_group("Water tiles")
-@export var water_tiles_coords: Array[Vector2i]
-@export_group("Ground tiles")
-@export var ground_tile_coords: Vector2i
-@export var ground_decoration_tiles_coords: Array[Vector2i]
-@export_range(0, 1, 0.1) var ground_decoration_possibility: float
-@export_group("Shore tiles")
-@export var left_shore_tile_coords: Vector2i
-@export var right_shore_tile_coords: Vector2i
 
 @export_category("Generator settings")
 @export var game_seed: int = 0
-@export var chunk_size: int = 16
-@export var delete_after_rows: int = 5
+@export var random_seed: bool = false
+@export var chunk_size: int = 8
+@export var delete_after_rows: int = 8
 @export_group("Enemy settings")
-@export var do_not_spawn_until_row: int = 10
-@export var spawn_threshold_rows: int = 5
-@export_subgroup("Possibilities")
-@export_range(0, 1, 0.01) var boat_possibility: float
+@export var do_not_spawn_until_row: int = 30
+@export var spawn_threshold_rows: int = 8
+@export_subgroup("River enemies")
+@export_subgroup("Boats")
+@export var boat_scenes: Array[PackedScene]
+@export_range(0, 1, 0.01) var boat_possibility: float = 0.2
 @export_group("River settings")
-@export var min_river_width: int
-@export var max_river_width: int
+@export var min_river_width: int = 14
+@export var max_river_width: int = 20
 @export_group("Segment settings")
-@export var min_segment_length: int
-@export var max_segment_length: int
+@export var min_segment_length: int = 4
+@export var max_segment_length: int = 16
 
 var _river_center: int
 var _river_width: int
@@ -49,11 +41,14 @@ var _segment_rows_left: int = 0
 var _enemy_spawned_last_row: int = 0
 
 
-@onready var boat_scene: PackedScene = preload("res://scenes/enemies/boat.tscn")
+#@onready var boat_scene: PackedScene = preload("res://scenes/enemies/boat.tscn")
 
 
 func _ready() -> void:
-	seed(game_seed)
+	if not random_seed:
+		seed(game_seed)
+	else:
+		randomize()
 	_tile_map_width = ceili(Constants.SCREEN_SIZE.x / Constants.TILE_SIZE)
 	_tile_map_height = ceili(Constants.SCREEN_SIZE.y / Constants.TILE_SIZE)
 	_river_center = floori(_tile_map_width * 0.5)
@@ -98,7 +93,6 @@ func _generate_chunk(start_y: int) -> void:
 		# Calculating left and right borders of river.
 		var left: int = floori(_river_center - _river_width * 0.5)
 		var right: int = ceili(_river_center + _river_width * 0.5)
-		printt(y, left, right, _river_center, _river_width)
 		for x in range(-1, _tile_map_width + 1):
 			var tile_coords: Vector2i = Vector2i(x, y)
 			if x <= left or x >= right:
@@ -143,7 +137,9 @@ func _maybe_spawn_content(y: int, left: int, right: int) -> void:
 
 	# Maybe spawn boat.
 	if randf() < boat_possibility:
+		var boat_scene: PackedScene = boat_scenes.pick_random()
 		var boat: Area2D = boat_scene.instantiate()
-		boat.position = tile_map.map_to_local(Vector2(randi_range(left + 2, right - 2), y))
+		boat.position = tile_map.map_to_local(Vector2(randi_range(left + 2, right - 2), y)).round()
 		add_child(boat)
+		prints("Spawned boat:", boat.position)
 		_enemy_spawned_last_row = spawn_threshold_rows

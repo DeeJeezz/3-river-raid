@@ -4,23 +4,25 @@ extends Area2D
 const ACCELERATION: float = 150.0
 
 @export_category("Horizontal movement settings")
-@export var horizontal_speed: float
+@export var horizontal_speed: float = 150
+@export_group("Rotating settings")
+@export_range(0, 90, 1) var max_rorate_angle: float = 15.0
+@export var rotating_speed_degrees: float = 100.0
 @export_category("Vertical movement settings")
-@export var vertical_speed: float
-@export var acceleration_speed: float
-@export var braking_speed: float
+@export var vertical_speed: float = 150
+@export var acceleration_speed: float = 300
+@export var braking_speed: float = 100
 @export_category("Shooting settings")
-@export_range(0.5, 5, 0.05) var shoot_cooldown: float = 0.25
+@export var bullet_scene: PackedScene
+@export_range(0.5, 5, 0.05) var shoot_cooldown: float = 0.75
 
 var _can_shoot: bool = true
 var _target_speed: float
 var _speed: float
 
-@onready var bullet_scene: PackedScene = preload("res://scenes/bullet.tscn")
-
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
-@onready var explosion: AnimatedSprite2D = $Explosion
+@onready var explosion: Explosion = $Explosion
 
 
 func _ready() -> void:
@@ -35,18 +37,18 @@ func _process(delta: float) -> void:
 
 
 func destroy() -> void:
-	collision_shape.set_deferred("disabled", true)
+	collision_shape.set_deferred(&"disabled", true)
 	_speed = 0
 	_target_speed = 0
 	horizontal_speed = 0
 	animated_sprite.hide()
-	var animation_names: PackedStringArray = explosion.sprite_frames.get_animation_names()
-	var random_explosion: String = animation_names[randi() % animation_names.size()]
-	explosion.play(random_explosion)
+	explosion.play_random_explosion()
 	explosion.animation_finished.connect(queue_free)
 
 
 func _move(direction: float, delta: float) -> void:
+
+	rotation_degrees = move_toward(rotation_degrees, direction * max_rorate_angle, rotating_speed_degrees * delta)
 
 	position.x += direction * horizontal_speed * delta
 	position.y -= _speed * delta

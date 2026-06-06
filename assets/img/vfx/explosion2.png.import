@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxi6sa0fehv15"
-path="res://.godot/imported/pipo-airship1_1.png-e0da1f7811170aa0091829365e184f00.ctex"
+uid="uid://j5q7fiibxo3k"
+path="res://.godot/imported/explosion2.png-b9790f1a5459d3184c6cda7cb9a88002.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/pipo-airship1_1.png"
-dest_files=["res://.godot/imported/pipo-airship1_1.png-e0da1f7811170aa0091829365e184f00.ctex"]
+source_file="res://assets/img/vfx/explosion2.png"
+dest_files=["res://.godot/imported/explosion2.png-b9790f1a5459d3184c6cda7cb9a88002.ctex"]
 
 [params]
 
