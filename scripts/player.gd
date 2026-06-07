@@ -23,7 +23,8 @@ var _speed: float
 var _previous_direction: float = 0
 var _current_animation_speed: float = DEFAULT_ANIMATION_SPEED
 
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var plane_sprite: AnimatedSprite2D = $Plane
+@onready var shadow_sprite: AnimatedSprite2D = $Plane/Shadow
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var explosion: Explosion = $Explosion
 
@@ -31,7 +32,7 @@ var _current_animation_speed: float = DEFAULT_ANIMATION_SPEED
 func _ready() -> void:
 	_speed = vertical_speed
 	_target_speed = _speed
-	animated_sprite.play(&"idle")
+	plane_sprite.play(&"idle")
 
 
 func _process(delta: float) -> void:
@@ -40,32 +41,46 @@ func _process(delta: float) -> void:
 
 
 func destroy() -> void:
+	_can_shoot = false
 	collision_shape.set_deferred(&"disabled", true)
 	_speed = 0
 	_target_speed = 0
 	horizontal_speed = 0
-	animated_sprite.hide()
+	plane_sprite.hide()
 	explosion.play_random_explosion()
 	explosion.animation_finished.connect(queue_free)
 
 func _play_turn_animation(direction: float) -> void:
 	if direction != _previous_direction:
-		if animated_sprite.animation_finished.is_connected(animated_sprite.play):
-			animated_sprite.animation_finished.disconnect(animated_sprite.play)
+		if plane_sprite.animation_finished.is_connected(plane_sprite.play):
+			plane_sprite.animation_finished.disconnect(plane_sprite.play)
+		if shadow_sprite.animation_finished.is_connected(shadow_sprite.play):
+			shadow_sprite.animation_finished.disconnect(shadow_sprite.play)
 		if direction < 0:
-			animated_sprite.play(&"turn_left", _current_animation_speed)
-			animated_sprite.animation_finished.connect(animated_sprite.play.bind(&"left_idle", _current_animation_speed))
+			plane_sprite.play(&"turn_left", _current_animation_speed)
+			plane_sprite.animation_finished.connect(plane_sprite.play.bind(&"left_idle", _current_animation_speed))
+			
+			shadow_sprite.play(&"turn_left", _current_animation_speed)
+			shadow_sprite.animation_finished.connect(shadow_sprite.play.bind(&"left_idle", _current_animation_speed))
+
 			collision_shape.scale.x = 0.5
 		elif direction > 0:
-			animated_sprite.play(&"turn_right", _current_animation_speed)
-			animated_sprite.animation_finished.connect(animated_sprite.play.bind(&"right_idle", _current_animation_speed))
+			plane_sprite.play(&"turn_right", _current_animation_speed)
+			plane_sprite.animation_finished.connect(plane_sprite.play.bind(&"right_idle", _current_animation_speed))
+			
+			shadow_sprite.play(&"turn_right", _current_animation_speed)
+			shadow_sprite.animation_finished.connect(shadow_sprite.play.bind(&"right_idle", _current_animation_speed))
+			
 			collision_shape.scale.x = 0.5
 		else:
 			if _previous_direction < 0:
-				animated_sprite.play(&"turn_left", return_to_idle_animation_speed * _current_animation_speed, true)
+				plane_sprite.play(&"turn_left", return_to_idle_animation_speed * _current_animation_speed, true)
+				shadow_sprite.play(&"turn_left", return_to_idle_animation_speed * _current_animation_speed, true)
 			elif _previous_direction > 0:
-				animated_sprite.play(&"turn_right", return_to_idle_animation_speed * _current_animation_speed, true)
-			animated_sprite.animation_finished.connect(animated_sprite.play.bind(&"idle", _current_animation_speed))
+				plane_sprite.play(&"turn_right", return_to_idle_animation_speed * _current_animation_speed, true)
+				shadow_sprite.play(&"turn_right", return_to_idle_animation_speed * _current_animation_speed, true)
+			plane_sprite.animation_finished.connect(plane_sprite.play.bind(&"idle", _current_animation_speed))
+			shadow_sprite.animation_finished.connect(shadow_sprite.play.bind(&"idle", _current_animation_speed))
 			collision_shape.scale.x = 1
 		
 	_previous_direction = direction

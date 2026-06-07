@@ -2,9 +2,6 @@
 class_name Boat
 extends Area2D
 
-var _destroying: bool = false
-
-
 @export_enum("1", "2", "3") var boat_color: String = "1":
 	set(value):
 		boat_color = value
@@ -14,6 +11,8 @@ var _destroying: bool = false
 	set(value):
 		cannon_rotation = value
 		cannon_sprite.rotation_degrees = cannon_rotation
+
+var _destroying: bool = false
 
 @onready var explosion: Explosion = $Explosion
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D

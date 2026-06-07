@@ -6,12 +6,13 @@ extends Camera2D
 
 
 func _process(delta: float) -> void:
-	if not is_instance_valid(target):
-		
-		var direction: Vector2 = Input.get_vector("move_left", "move_right", "accelerate", "brake")
-		position += direction * speed * delta
+	if OS.has_feature("debug"):
+		if not is_instance_valid(target):
+			
+			var direction: Vector2 = Input.get_vector("move_left", "move_right", "accelerate", "brake")
+			position += direction * speed * delta
 
-		return
+			return
 
 	position.y = target.position.y + target_offset.y
 	position = position.round()

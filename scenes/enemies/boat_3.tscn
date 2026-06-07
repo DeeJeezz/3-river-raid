@@ -182,7 +182,7 @@ animation = &"1"
 
 [node name="Shadow" type="Sprite2D" parent="Boat" unique_id=18924479]
 show_behind_parent = true
-position = Vector2(8, -8)
+position = Vector2(-8, -8.000001)
 texture = ExtResource("2_iw87r")
 
 [node name="Cannon" type="AnimatedSprite2D" parent="Boat" unique_id=896567090]
@@ -193,7 +193,7 @@ offset = Vector2(-1, 10)
 
 [node name="CannonShadow" type="AnimatedSprite2D" parent="Boat/Cannon" unique_id=831775816]
 show_behind_parent = true
-position = Vector2(3.5221443, 6.970976)
+position = Vector2(-7, 5.9999995)
 sprite_frames = SubResource("SpriteFrames_i4dtr")
 
 [node name="Explosion" parent="." unique_id=1450720340 instance=ExtResource("2_3nglj")]

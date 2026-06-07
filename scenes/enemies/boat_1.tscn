@@ -167,7 +167,6 @@ animations = [{
 collision_layer = 5
 collision_mask = 8
 script = ExtResource("1_c7bf6")
-boat_color = null
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=612316807]
 rect = Rect2(-13, -6, 26, 12)
@@ -184,7 +183,7 @@ animation = &"1"
 
 [node name="Shadow" type="Sprite2D" parent="Boat" unique_id=985096441]
 show_behind_parent = true
-position = Vector2(8, -8)
+position = Vector2(-7.999999, -8.000001)
 scale = Vector2(0.99999994, 0.99999994)
 texture = ExtResource("2_2cytg")
 
@@ -196,7 +195,7 @@ offset = Vector2(2, 20)
 
 [node name="CannonShadow" type="AnimatedSprite2D" parent="Boat/Cannon" unique_id=1484214704]
 show_behind_parent = true
-position = Vector2(8, 18)
+position = Vector2(-4.000001, 18)
 sprite_frames = SubResource("SpriteFrames_fdc6b")
 frame = 3
 frame_progress = 1.0
