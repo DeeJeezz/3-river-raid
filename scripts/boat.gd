@@ -11,6 +11,7 @@ extends Area2D
 	set(value):
 		cannon_rotation = value
 		cannon_sprite.rotation_degrees = cannon_rotation
+@export_range(0, 1, 0.005) var cannon_rotation_speed: float = 0.025
 
 var _destroying: bool = false
 
@@ -20,9 +21,27 @@ var _destroying: bool = false
 @onready var cannon_sprite: AnimatedSprite2D = $Boat/Cannon
 
 
+var _target: Player
+
+
 func _ready() -> void:
 	boat_color = Utils.get_random_animation_name(boat_sprite)
 	boat_sprite.play()
+	
+	_target = get_tree().get_first_node_in_group(Constants.PLAYER_GROUP_NAME)
+
+
+func _process(_delta: float) -> void:
+	if not is_instance_valid(_target):
+		return
+
+	cannon_rotation = rad_to_deg(
+		lerp_angle(
+			deg_to_rad(cannon_rotation), 
+			get_angle_to(_target.global_position), 
+			cannon_rotation_speed,
+		),
+	)
 
 
 func _destroy() -> void:

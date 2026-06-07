@@ -136,7 +136,10 @@ func _maybe_spawn_content(y: int, left: int, right: int) -> void:
 	if randf() < boat_possibility:
 		var boat_scene: PackedScene = boat_scenes.pick_random()
 		var boat: Area2D = boat_scene.instantiate()
-		boat.position = tile_map.map_to_local(Vector2(randi_range(left + 2, right - 2), y)).round()
+		boat.position = tile_map.map_to_local(Vector2(randi_range(left + 3, right - 3), y)).round()
+		# Rotate boat if it closer to right shore.
+		if boat.position.x > tile_map.map_to_local(Vector2(_river_center, y)).x:
+			boat.rotation_degrees = 180
 		add_child(boat)
 		prints("Spawned boat:", boat.position)
 		_enemy_spawned_last_row = spawn_threshold_rows
