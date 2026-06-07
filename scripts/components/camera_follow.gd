@@ -14,5 +14,4 @@ func _process(delta: float) -> void:
 
 			return
 
-	position.y = target.position.y + target_offset.y
-	position = position.round()
+	position.y = round(target.position.y + target_offset.y)

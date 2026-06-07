@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bgnpdkdmvv13p"]
 
-[ext_resource type="Script" uid="uid://d4l42sykx4lpv" path="res://scripts/boat.gd" id="1_ys3tt"]
+[ext_resource type="Script" uid="uid://d4l42sykx4lpv" path="res://scripts/enemies/boat.gd" id="1_ys3tt"]
 [ext_resource type="PackedScene" uid="uid://dyj1255yixoff" path="res://scenes/components/explosion.tscn" id="2_3nglj"]
 [ext_resource type="Texture2D" uid="uid://bkdb35e5k741a" path="res://assets/img/entities/boats/boat_3/boat_3_shadow.png" id="2_iw87r"]
 [ext_resource type="Texture2D" uid="uid://b8j15gqertu5x" path="res://assets/img/entities/boats/boat_3/Boat3_water_animation_color1/Boat3_water_frame1.png" id="2_l8in6"]

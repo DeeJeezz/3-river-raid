@@ -7,8 +7,10 @@
 [ext_resource type="Shader" uid="uid://bjlgwnaxnti3a" path="res://shaders/vignette.gdshader" id="4_1seuy"]
 [ext_resource type="PackedScene" uid="uid://h05cy2ax5ndn" path="res://scenes/enemies/boat_2.tscn" id="4_8a7m2"]
 [ext_resource type="PackedScene" uid="uid://cpgnsf3ny0nf4" path="res://scenes/player.tscn" id="4_bfxgj"]
+[ext_resource type="PackedScene" uid="uid://dxnt8s5lldykh" path="res://scenes/components/enemy_spawner.tscn" id="5_2r1tl"]
 [ext_resource type="PackedScene" uid="uid://bgnpdkdmvv13p" path="res://scenes/enemies/boat_3.tscn" id="5_8a7m2"]
 [ext_resource type="PackedScene" uid="uid://b3dqia7ofycc0" path="res://scenes/enemies/boat_4.tscn" id="6_plydf"]
+[ext_resource type="PackedScene" uid="uid://dcng1ud64y4cx" path="res://scenes/enemies/helicopter_1.tscn" id="10_5ntmo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dywbp"]
 texture = ExtResource("1_bfxgj")
@@ -208,12 +210,12 @@ shader_parameter/feather = 0.15
 [node name="Ground" type="TileMapLayer" parent="." unique_id=13921135]
 tile_set = SubResource("TileSet_dd0lh")
 
-[node name="LevelGenerator" parent="." unique_id=723464361 node_paths=PackedStringArray("camera", "tile_map") instance=ExtResource("1_4tcl0")]
+[node name="LevelGenerator" parent="." unique_id=723464361 node_paths=PackedStringArray("camera", "tile_map", "seed_label", "enemy_spawner") instance=ExtResource("1_4tcl0")]
 camera = NodePath("../Camera2D")
 tile_map = NodePath("../Ground")
+seed_label = NodePath("../CanvasLayer/SeedLabel")
 random_seed = true
-boat_scenes = Array[PackedScene]([ExtResource("3_2r1tl"), ExtResource("4_8a7m2"), ExtResource("5_8a7m2"), ExtResource("6_plydf")])
-max_river_width = 14
+enemy_spawner = NodePath("../EnemySpawner")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=702952690 node_paths=PackedStringArray("target")]
 position = Vector2(320, 180)
@@ -227,6 +229,10 @@ target_offset = Vector2(0, -180)
 [node name="Player" parent="." unique_id=811327754 instance=ExtResource("4_bfxgj")]
 position = Vector2(320, 336)
 
+[node name="EnemySpawner" parent="." unique_id=1215099908 instance=ExtResource("5_2r1tl")]
+boat_scenes = Array[PackedScene]([ExtResource("3_2r1tl"), ExtResource("4_8a7m2"), ExtResource("5_8a7m2"), ExtResource("6_plydf")])
+helicopter_scenes = Array[PackedScene]([ExtResource("10_5ntmo")])
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=594619370]
 
 [node name="Vignette" type="ColorRect" parent="CanvasLayer" unique_id=315861015]
@@ -237,3 +243,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
+
+[node name="SeedLabel" type="Label" parent="CanvasLayer" unique_id=959570759]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 4
+text = "seed: 123123"
+horizontal_alignment = 2
+vertical_alignment = 1

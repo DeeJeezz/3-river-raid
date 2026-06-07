@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dxnt8s5lldykh"]
+
+[ext_resource type="Script" uid="uid://cnyd7xogi2ey0" path="res://scripts/components/enemy_spawner.gd" id="1_gwarx"]
+
+[node name="EnemySpawner" type="Node2D" unique_id=1215099908]
+script = ExtResource("1_gwarx")
+boat_scenes = null
+helicopter_scenes = null

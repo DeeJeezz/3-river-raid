@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://dcng1ud64y4cx"]
+
+[ext_resource type="Script" uid="uid://cdyxmdjnsm1tl" path="res://scripts/enemies/helicopter.gd" id="1_b0h6y"]
+[ext_resource type="Texture2D" uid="uid://74gbwo4j658j" path="res://assets/img/entities/helicopters/helicopter_1/chopper-44x99.png" id="1_rs2hn"]
+[ext_resource type="PackedScene" uid="uid://dyj1255yixoff" path="res://scenes/components/explosion.tscn" id="3_unkqi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rs2hn"]
+size = Vector2(50, 16)
+
+[sub_resource type="Animation" id="Animation_b0h6y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Blades:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_unkqi"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Blades:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 3.1415927, 6.283185307179586]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s6q35"]
+_data = {
+&"RESET": SubResource("Animation_b0h6y"),
+&"idle": SubResource("Animation_unkqi")
+}
+
+[node name="Helicopter1" type="Area2D" unique_id=950838155]
+collision_layer = 5
+collision_mask = 8
+script = ExtResource("1_b0h6y")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1311566306]
+rect = Rect2(-25, -8, 50, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=844460161]
+shape = SubResource("RectangleShape2D_rs2hn")
+
+[node name="Body" type="Sprite2D" parent="." unique_id=2130218388]
+rotation = 1.5707964
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_rs2hn")
+region_enabled = true
+region_rect = Rect2(0, 0, 44, 99)
+
+[node name="Blades" type="Sprite2D" parent="Body" unique_id=1580991018]
+position = Vector2(-5.2453663e-07, -12)
+texture = ExtResource("1_rs2hn")
+offset = Vector2(0.5, 0.5)
+region_enabled = true
+region_rect = Rect2(134, 99, 93, 93)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1230075246]
+libraries/ = SubResource("AnimationLibrary_s6q35")
+autoplay = &"idle"
+speed_scale = 2.0
+
+[node name="Explosion" parent="." unique_id=1450720340 instance=ExtResource("3_unkqi")]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

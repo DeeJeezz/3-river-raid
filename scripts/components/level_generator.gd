@@ -14,22 +14,27 @@ const WATER_TERRAIN: int = 1
 
 @export_category("Generator settings")
 @export var game_seed: int = 0
+@export var seed_label: Label
 @export var random_seed: bool = false
 @export var chunk_size: int = 8
 @export var delete_after_rows: int = 8
-@export_group("Enemy settings")
-@export var do_not_spawn_until_row: int = 30
-@export var spawn_threshold_rows: int = 8
-@export_subgroup("River enemies")
-@export_subgroup("Boats")
-@export var boat_scenes: Array[PackedScene]
-@export_range(0, 1, 0.01) var boat_possibility: float = 0.2
 @export_group("River settings")
 @export var min_river_width: int = 14
 @export var max_river_width: int = 20
 @export_group("Segment settings")
 @export var min_segment_length: int = 4
 @export var max_segment_length: int = 16
+
+@export_category("Spawner settings")
+@export var enemy_spawner: EnemySpawner
+@export var do_not_spawn_until_row: int = 30
+@export var spawn_threshold_rows: int = 8
+@export_group("River enemies")
+@export_subgroup("Boats", "boat")
+@export_range(0, 1, 0.01) var boat_possibility: float = 0.2
+@export_group("Air enemies")
+@export_subgroup("Helicopters", "helicopter")
+@export_range(0, 1, 0.01) var helicopter_possibility: float = 0.2
 
 var _river_center: int
 var _river_width: int
@@ -42,10 +47,11 @@ var _enemy_spawned_last_row: int = 0
 
 
 func _ready() -> void:
-	if not random_seed:
-		seed(game_seed)
-	else:
-		randomize()
+	if random_seed:
+		game_seed = randi()
+	seed(game_seed)
+	seed_label.text = "seed: %d" % game_seed
+
 	_tile_map_width = ceili(Constants.SCREEN_SIZE.x / Constants.TILE_SIZE)
 	_tile_map_height = ceili(Constants.SCREEN_SIZE.y / Constants.TILE_SIZE)
 	_river_center = floori(_tile_map_width * 0.5)
@@ -132,14 +138,22 @@ func _maybe_spawn_content(y: int, left: int, right: int) -> void:
 	if y > _tile_map_height - do_not_spawn_until_row:
 		return
 
+	var maybe_spawn: float = randf()
 	# Maybe spawn boat.
-	if randf() < boat_possibility:
-		var boat_scene: PackedScene = boat_scenes.pick_random()
-		var boat: Area2D = boat_scene.instantiate()
-		boat.position = tile_map.map_to_local(Vector2(randi_range(left + 3, right - 3), y)).round()
+	if maybe_spawn < boat_possibility:
+		var boat_position: Vector2 = tile_map.map_to_local(Vector2(randi_range(left + 3, right - 3), y)).round()
+		var boat_rotation: float = 0.0
 		# Rotate boat if it closer to right shore.
-		if boat.position.x > tile_map.map_to_local(Vector2(_river_center, y)).x:
-			boat.rotation_degrees = 180
-		add_child(boat)
-		prints("Spawned boat:", boat.position)
+		if boat_position.x > tile_map.map_to_local(Vector2(_river_center, y)).x:
+			boat_rotation = 180.0
+			
+		enemy_spawner.spawn_boat(boat_position, boat_rotation)
+		_enemy_spawned_last_row = spawn_threshold_rows
+	elif maybe_spawn >= boat_possibility and maybe_spawn < boat_possibility + helicopter_possibility:
+		var helicopter_position: Vector2 = tile_map.map_to_local(Vector2(randi_range(3, _tile_map_width - 3), y)).round()
+		var helicopter_rotation: float = 0.0
+		# Rotate boat if it closer to right shore.
+		if helicopter_position.x > tile_map.map_to_local(Vector2(_river_center, y)).x:
+			helicopter_rotation = 180.0
+		enemy_spawner.spawn_helicopter(helicopter_position, helicopter_rotation)
 		_enemy_spawned_last_row = spawn_threshold_rows

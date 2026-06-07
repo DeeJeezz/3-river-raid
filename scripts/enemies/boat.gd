@@ -7,6 +7,7 @@ extends Area2D
 		boat_color = value
 		boat_sprite.animation = value
 		cannon_sprite.animation = value
+@export_group("Cannon settings", "cannon")
 @export_range(-360, 360, 1) var cannon_rotation: float = 0:
 	set(value):
 		cannon_rotation = value
@@ -25,6 +26,9 @@ var _target: Player
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+
 	boat_color = Utils.get_random_animation_name(boat_sprite)
 	boat_sprite.play()
 	

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cpgnsf3ny0nf4"]
 
-[ext_resource type="Script" uid="uid://c742t3dwh2c7j" path="res://scripts/player.gd" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://c742t3dwh2c7j" path="res://scripts/player/player.gd" id="1_3vyb7"]
 [ext_resource type="PackedScene" uid="uid://ip2px6p5eh4v" path="res://scenes/bullet.tscn" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://b8rsm5qw7gp4k" path="res://assets/img/entities/plane/flying/000.png" id="3_2dvfe"]
 [ext_resource type="PackedScene" uid="uid://dyj1255yixoff" path="res://scenes/components/explosion.tscn" id="3_qhqgy"]
