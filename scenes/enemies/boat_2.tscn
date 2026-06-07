@@ -15,9 +15,21 @@
 [ext_resource type="Texture2D" uid="uid://cw6dstny06db5" path="res://assets/img/entities/boats/boat_2/Boat2_water_animation_color3/Boat2_water_frame2.png" id="11_tl3fp"]
 [ext_resource type="Texture2D" uid="uid://e8ov8gpbsi72" path="res://assets/img/entities/boats/boat_2/Boat2_water_animation_color3/Boat2_water_frame3.png" id="12_u1k2y"]
 [ext_resource type="Texture2D" uid="uid://bcscvvcwrcb8f" path="res://assets/img/entities/boats/boat_2/Boat2_water_animation_color3/Boat2_water_frame4.png" id="13_nfin5"]
+[ext_resource type="Texture2D" uid="uid://bbi0vl2pvdjpl" path="res://assets/img/entities/boats/boat_2/Boat2_water_animation_color/cannon/Cannon2_color1_1.png" id="15_smfr5"]
+[ext_resource type="Texture2D" uid="uid://cyoh5xfuks2vy" path="res://assets/img/entities/boats/boat_2/Boat2_water_animation_color/cannon/Cannon2_color1_2.png" id="16_6nplb"]
+[ext_resource type="Texture2D" uid="uid://dqnb0y0bri26" path="res://assets/img/entities/boats/boat_2/Boat2_water_animation_color/cannon/Cannon2_color1_3.png" id="17_3bmhd"]
+[ext_resource type="Texture2D" uid="uid://nmq7jigreqf6" path="res://assets/img/entities/boats/boat_2/Boat2_water_animation_color2/cannon/Cannon2_color2_1.png" id="18_d54uu"]
+[ext_resource type="Texture2D" uid="uid://cgkdcelsurh20" path="res://assets/img/entities/boats/boat_2/Boat2_water_animation_color2/cannon/Cannon2_color2_2.png" id="19_smfr5"]
+[ext_resource type="Texture2D" uid="uid://cfv0l37h47oe4" path="res://assets/img/entities/boats/boat_2/Boat2_water_animation_color2/cannon/Cannon2_color2_3.png" id="20_6nplb"]
+[ext_resource type="Texture2D" uid="uid://bups773ebp6jy" path="res://assets/img/entities/boats/boat_2/Boat2_water_animation_color3/cannon/Cannon2_color3_1.png" id="21_nsc6u"]
+[ext_resource type="Texture2D" uid="uid://dlkiqor07ilcj" path="res://assets/img/entities/boats/boat_2/Boat2_water_animation_color3/cannon/Cannon2_color3_2.png" id="22_d54uu"]
+[ext_resource type="Texture2D" uid="uid://dltaiqt8uaacy" path="res://assets/img/entities/boats/boat_2/Boat2_water_animation_color3/cannon/Cannon2_color3_3.png" id="23_smfr5"]
+[ext_resource type="Texture2D" uid="uid://br01o3c8jgmx7" path="res://assets/img/entities/boats/boat_2/cannon_shadow/Cannon2_color1_1.png" id="26_emj87"]
+[ext_resource type="Texture2D" uid="uid://dx4yn2kcdq2v" path="res://assets/img/entities/boats/boat_2/cannon_shadow/Cannon2_color1_2.png" id="27_hbmp5"]
+[ext_resource type="Texture2D" uid="uid://dkb64naddrd75" path="res://assets/img/entities/boats/boat_2/cannon_shadow/Cannon2_color1_3.png" id="28_vaj82"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkwoy"]
-size = Vector2(40, 16)
+size = Vector2(22, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_avrbf"]
 animations = [{
@@ -73,30 +85,114 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_a7nfs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_smfr5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_6nplb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_3bmhd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_smfr5")
+}],
+"loop": false,
+"name": &"1",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_d54uu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_smfr5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_6nplb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_d54uu")
+}],
+"loop": false,
+"name": &"2",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_nsc6u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_d54uu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_smfr5")
+}],
+"loop": false,
+"name": &"3",
+"speed": 8.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dnmcf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("26_emj87")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_hbmp5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_vaj82")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_emj87")
+}],
+"loop": false,
+"name": &"1",
+"speed": 8.0
+}]
+
 [node name="Boat2" type="Area2D" unique_id=1141433055]
 collision_layer = 5
 collision_mask = 8
 script = ExtResource("1_0vyx6")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=612316807]
-rect = Rect2(-16, -8, 32, 16)
+rect = Rect2(-11, -8, 22, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=937310278]
-position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_mkwoy")
-
-[node name="Shadow" type="Sprite2D" parent="." unique_id=1303275915]
-position = Vector2(-2.9999998, -3)
-rotation = -1.5707964
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("2_4vdy5")
 
 [node name="Boat" type="AnimatedSprite2D" parent="." unique_id=187666675]
 position = Vector2(-2.019484e-28, 1.2037062e-35)
 rotation = -1.5707964
-scale = Vector2(0.35, 0.35)
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_avrbf")
-animation = &"3"
+animation = &"1"
+
+[node name="Shadow" type="Sprite2D" parent="Boat" unique_id=1303275915]
+show_behind_parent = true
+position = Vector2(8.5, -8.5)
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("2_4vdy5")
+
+[node name="Cannon" type="AnimatedSprite2D" parent="Boat" unique_id=628117693]
+position = Vector2(-1.7484554e-07, 3.9999995)
+scale = Vector2(0.99999994, 0.99999994)
+sprite_frames = SubResource("SpriteFrames_a7nfs")
+animation = &"1"
+offset = Vector2(-1, 12)
+
+[node name="CannonShadow" type="AnimatedSprite2D" parent="Boat/Cannon" unique_id=197769336]
+show_behind_parent = true
+position = Vector2(4.0000005, 8)
+scale = Vector2(0.99999994, 0.99999994)
+sprite_frames = SubResource("SpriteFrames_dnmcf")
+animation = &"1"
 
 [node name="Explosion" parent="." unique_id=1450720340 instance=ExtResource("6_runhx")]
 
