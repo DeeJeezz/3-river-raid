@@ -214,8 +214,9 @@ tile_set = SubResource("TileSet_dd0lh")
 camera = NodePath("../Camera2D")
 tile_map = NodePath("../Ground")
 seed_label = NodePath("../CanvasLayer/SeedLabel")
-random_seed = true
+chunk_size = 16
 enemy_spawner = NodePath("../EnemySpawner")
+spawn_threshold_rows = 10
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=702952690 node_paths=PackedStringArray("target")]
 position = Vector2(320, 180)
@@ -258,3 +259,10 @@ theme_override_font_sizes/font_size = 4
 text = "seed: 123123"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer" unique_id=1847993135]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Load"
+
+[connection signal="button_down" from="CanvasLayer/Button" to="LevelGenerator" method="_on_button_button_down"]

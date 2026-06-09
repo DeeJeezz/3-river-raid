@@ -7,12 +7,12 @@ extends Node2D
 
 func spawn_boat(pos: Vector2, degrees_rotation: float) -> void:
 	_spawn_enemy(boat_scenes, pos, degrees_rotation)
-	prints("Spawned boat:", pos)
+	#prints("Spawned boat:", pos)
 
 
 func spawn_helicopter(pos: Vector2, degrees_rotation: float) -> void:
 	_spawn_enemy(helicopter_scenes, pos, degrees_rotation)
-	prints("Spawned helicopter:", pos)
+	#prints("Spawned helicopter:", pos)
 
 
 func _spawn_enemy(enemy_scenes: Array[PackedScene], enemy_position: Vector2, enemy_rotation_degrees: float) -> void:

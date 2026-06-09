@@ -6,6 +6,8 @@ const TERRAIN_SET: int = 0
 const GROUND_TERRAIN: int = 0
 const WATER_TERRAIN: int = 1
 
+const WRAP_CHUNK_OFFSET: int = 1
+
 @export_category("Camera settings")
 @export var camera: Camera2D
 
@@ -45,12 +47,15 @@ var _tile_map_height: int
 var _segment_rows_left: int = 0
 var _enemy_spawned_last_row: int = 0
 
+var _last_loaded_row: int = 0
+
 
 func _ready() -> void:
 	if random_seed:
 		game_seed = randi()
 	seed(game_seed)
 	seed_label.text = "seed: %d" % game_seed
+	prints("Seed", game_seed)
 
 	_tile_map_width = ceili(Constants.SCREEN_SIZE.x / Constants.TILE_SIZE)
 	_tile_map_height = ceili(Constants.SCREEN_SIZE.y / Constants.TILE_SIZE)
@@ -58,8 +63,11 @@ func _ready() -> void:
 	_river_width = randi_range(min_river_width, max_river_width)
 
 	# On level ready preload rows starting from -2 "y" coord.
-	_preload_chunk(-2)
-	
+	_preload_chunk(-1)
+
+	#_generate_chunk(_tile_map_height)
+	##_generate_chunk(_tile_map_height - chunk_size)
+
 	for y in range(_tile_map_height, -1, -chunk_size):
 		_generate_chunk(y)
 
@@ -87,11 +95,11 @@ func _check_need_to_delete_rows() -> void:
 	for x in range(_tile_map_width):
 		tile_map.erase_cell(Vector2i(x, y + delete_after_rows))
 
-	
+
 func _generate_chunk(start_y: int) -> void:
 	var water_coords: Array[Vector2i] = []
 	var ground_coords: Array[Vector2i] = []
-	for y in range(start_y + 3, start_y - chunk_size, -1):
+	for y in range(start_y + WRAP_CHUNK_OFFSET, start_y - chunk_size, -1):
 		_check_segment_ended()
 		# Calculating left and right borders of river.
 		var left: int = floori(_river_center - _river_width * 0.5)
@@ -102,11 +110,14 @@ func _generate_chunk(start_y: int) -> void:
 				ground_coords.append(tile_coords)
 			else:
 				water_coords.append(tile_coords)
-		_maybe_spawn_content(y, left, right)
-				
+
+		# Do not spawn on wrapped rows.
+		if y <= start_y:
+			_maybe_spawn_content(y, left, right)
+
 	tile_map.set_cells_terrain_connect(water_coords, TERRAIN_SET, WATER_TERRAIN)
 	tile_map.set_cells_terrain_connect(ground_coords, TERRAIN_SET, GROUND_TERRAIN)
-	
+
 
 func _check_segment_ended() -> void:
 	if _segment_rows_left > 0:
@@ -141,19 +152,27 @@ func _maybe_spawn_content(y: int, left: int, right: int) -> void:
 	var maybe_spawn: float = randf()
 	# Maybe spawn boat.
 	if maybe_spawn < boat_possibility:
-		var boat_position: Vector2 = tile_map.map_to_local(Vector2(randi_range(left + 3, right - 3), y)).round()
+		var tile_map_boat_position: Vector2 = Vector2(randi_range(left + 3, right - 3), y)
+		var boat_position: Vector2 = tile_map.map_to_local(tile_map_boat_position).round()
 		var boat_rotation: float = 0.0
 		# Rotate boat if it closer to right shore.
 		if boat_position.x > tile_map.map_to_local(Vector2(_river_center, y)).x:
 			boat_rotation = 180.0
-			
 		enemy_spawner.spawn_boat(boat_position, boat_rotation)
+		prints("Spawned boat: ", tile_map_boat_position)
 		_enemy_spawned_last_row = spawn_threshold_rows
 	elif maybe_spawn >= boat_possibility and maybe_spawn < boat_possibility + helicopter_possibility:
-		var helicopter_position: Vector2 = tile_map.map_to_local(Vector2(randi_range(3, _tile_map_width - 3), y)).round()
+		var tile_map_heli_position: Vector2 = Vector2(randi_range(3, _tile_map_width - 3), y)
+		var helicopter_position: Vector2 = tile_map.map_to_local(tile_map_heli_position).round()
 		var helicopter_rotation: float = 0.0
-		# Rotate boat if it closer to right shore.
+		# Rotate helicopter if it closer to right shore.
 		if helicopter_position.x > tile_map.map_to_local(Vector2(_river_center, y)).x:
 			helicopter_rotation = 180.0
 		enemy_spawner.spawn_helicopter(helicopter_position, helicopter_rotation)
+		prints("Spawned helicopter: ", tile_map_heli_position)
 		_enemy_spawned_last_row = spawn_threshold_rows
+
+
+func _on_button_button_down() -> void:
+	_generate_chunk(_last_loaded_row)
+	_last_loaded_row -= chunk_size
