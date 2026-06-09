@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="3-river-raid"
-run/main_scene="uid://dstgwn5lcmi7h"
+run/main_scene="uid://bhtv81exgijh3"
 config/features=PackedStringArray("4.6", "Forward Plus")
 run/max_fps=60
 config/icon="uid://3uw3rhogysj6"
@@ -20,6 +20,7 @@ config/icon="uid://3uw3rhogysj6"
 
 Constants="*uid://d3id0lpsleymt"
 Utils="*uid://chhu2q7b77x68"
+Signals="*uid://d4in0u8oe8pms"
 
 [debug]
 

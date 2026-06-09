@@ -214,8 +214,13 @@ tile_set = SubResource("TileSet_dd0lh")
 camera = NodePath("../Camera2D")
 tile_map = NodePath("../Ground")
 seed_label = NodePath("../CanvasLayer/SeedLabel")
+random_seed = true
+min_river_width = 10
+max_river_width = 16
 enemy_spawner = NodePath("../EnemySpawner")
-spawn_threshold_rows = 10
+do_not_spawn_until_row = 20
+spawn_threshold_rows = 6
+helicopter_possibility = 0.15
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=702952690 node_paths=PackedStringArray("target")]
 position = Vector2(320, 180)

@@ -6,7 +6,7 @@ const TERRAIN_SET: int = 0
 const GROUND_TERRAIN: int = 0
 const WATER_TERRAIN: int = 1
 
-const WRAP_CHUNK_OFFSET: int = 1
+const WRAP_CHUNK_OFFSET: int = 2
 
 @export_category("Camera settings")
 @export var camera: Camera2D
@@ -126,7 +126,7 @@ func _check_segment_ended() -> void:
 
 	_segment_rows_left = randi_range(min_segment_length, max_segment_length)
 	var river_center_offset: int = [-1, 1].pick_random()
-	var river_width_offset: int = [-1, 1].pick_random()
+	var river_width_offset: int = [-3, -2, -1, 1, 2, 3].pick_random()
 	_river_center = clampi(
 		_river_center + river_center_offset,
 		16,

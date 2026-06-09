@@ -1,5 +1,9 @@
 extends Node
 
+
+const MAIN_MENU_SCENE_PATH: String = "res://scenes/ui/main_menu.tscn"
+const GAME_SCENE_PATH: String = "res://scenes/levels/level1.tscn"
+
 const TILE_SIZE: int = 16
 const PLAYER_GROUP_NAME: StringName = &"Player"
 

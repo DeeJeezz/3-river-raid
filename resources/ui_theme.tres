@@ -1,0 +1,53 @@
+[gd_resource type="Theme" format=3 uid="uid://ciglotwmlxfdb"]
+
+[ext_resource type="FontFile" uid="uid://c0ma0shmh2qng" path="res://assets/fonts/OptionB_SuperstarMemesbruh03.ttf" id="1_cviax"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cviax"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.39241, 0.39259592, 0.5205095, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = 2
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yl303"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.35622412, 0.3564057, 0.4776153, 1)
+border_width_bottom = 2
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qosx5"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.43785226, 0.43836486, 0.571737, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[resource]
+Button/font_sizes/font_size = 24
+Button/fonts/font = ExtResource("1_cviax")
+Button/styles/hover = SubResource("StyleBoxFlat_cviax")
+Button/styles/normal = SubResource("StyleBoxFlat_yl303")
+Button/styles/pressed = SubResource("StyleBoxFlat_qosx5")

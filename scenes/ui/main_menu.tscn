@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://c0xxl4xlvuck2"]
+
+[ext_resource type="Texture2D" uid="uid://3uw3rhogysj6" path="res://icon.png" id="1_fe2o3"]
+[ext_resource type="Script" uid="uid://srxa2pkd1j4k" path="res://scripts/ui/main_menu.gd" id="1_m1kxf"]
+[ext_resource type="FontFile" uid="uid://c0ma0shmh2qng" path="res://assets/fonts/OptionB_SuperstarMemesbruh03.ttf" id="2_1g8jr"]
+[ext_resource type="Theme" uid="uid://ciglotwmlxfdb" path="res://resources/ui_theme.tres" id="3_1g8jr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m1kxf"]
+
+[node name="MainMenu" type="CanvasLayer" unique_id=974182623]
+script = ExtResource("1_m1kxf")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1453428597]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.17214063, 0.4318031, 0.73100156, 1)
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect" unique_id=1716673954]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = -116.0
+offset_right = 272.0
+offset_bottom = 44.0
+grow_vertical = 2
+rotation = 0.26529005
+texture = ExtResource("1_fe2o3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MenuPanel" type="Panel" parent="ColorRect" unique_id=1042232946]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -304.0
+offset_top = -280.0
+offset_right = -48.0
+offset_bottom = -56.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_m1kxf")
+
+[node name="GameNameLabel" type="Label" parent="ColorRect/MenuPanel" unique_id=1146483607]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.5
+offset_right = 112.5
+offset_bottom = 48.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_1g8jr")
+theme_override_font_sizes/font_size = 48
+text = "River Raid"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect/MenuPanel" unique_id=1019158059]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -32.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MenuPanel/MarginContainer" unique_id=1755480104]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PlayButton" type="Button" parent="ColorRect/MenuPanel/MarginContainer/VBoxContainer" unique_id=174094691]
+layout_mode = 2
+theme = ExtResource("3_1g8jr")
+text = "Play"
+
+[node name="QuitButton" type="Button" parent="ColorRect/MenuPanel/MarginContainer/VBoxContainer" unique_id=95513628]
+layout_mode = 2
+theme = ExtResource("3_1g8jr")
+text = "Quit"
+
+[connection signal="button_down" from="ColorRect/MenuPanel/MarginContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_button_down"]
+[connection signal="button_down" from="ColorRect/MenuPanel/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_button_down"]
