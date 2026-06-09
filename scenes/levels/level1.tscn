@@ -214,7 +214,6 @@ tile_set = SubResource("TileSet_dd0lh")
 camera = NodePath("../Camera2D")
 tile_map = NodePath("../Ground")
 seed_label = NodePath("../CanvasLayer/SeedLabel")
-chunk_size = 16
 enemy_spawner = NodePath("../EnemySpawner")
 spawn_threshold_rows = 10
 
@@ -261,6 +260,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Button" type="Button" parent="CanvasLayer" unique_id=1847993135]
+visible = false
 offset_right = 8.0
 offset_bottom = 8.0
 text = "Load"

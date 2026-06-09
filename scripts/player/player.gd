@@ -59,6 +59,7 @@ func _play_turn_animation(direction: float) -> void:
 			plane_sprite.animation_finished.disconnect(plane_sprite.play)
 		if shadow_sprite.animation_finished.is_connected(shadow_sprite.play):
 			shadow_sprite.animation_finished.disconnect(shadow_sprite.play)
+		
 		if direction < 0:
 			plane_sprite.play(&"turn_left", _current_animation_speed)
 			plane_sprite.animation_finished.connect(plane_sprite.play.bind(&"left_idle", _current_animation_speed))
@@ -121,7 +122,8 @@ func _change_speed(delta: float) -> void:
 
 
 func _handle_input(delta: float) -> void:
-	var direction: float = Input.get_axis(&"move_left", &"move_right")
+
+	var direction: float = Input.get_axis("move_left", "move_right")
 	_move(direction, delta)
 
 	if debug_controls:
