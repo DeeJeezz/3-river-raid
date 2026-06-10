@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://b57iqu7ibg5dn"]
+
+[ext_resource type="Texture2D" uid="uid://xmmj22dyoy5f" path="res://assets/img/world/Bridges.png" id="1_7ct4w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ct4w"]
+size = Vector2(128, 72)
+
+[node name="Bridge" type="Area2D" unique_id=379837550]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=310403364]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_7ct4w")
+
+[node name="Left" type="Sprite2D" parent="." unique_id=400578475]
+texture = ExtResource("1_7ct4w")
+region_enabled = true
+region_rect = Rect2(498, 113, 46, 76)
+
+[node name="Middle" type="Sprite2D" parent="." unique_id=474961842]
+position = Vector2(46.5, -16)
+texture = ExtResource("1_7ct4w")
+region_enabled = true
+region_rect = Rect2(544, 108, 47, 54)

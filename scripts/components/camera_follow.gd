@@ -2,7 +2,7 @@ extends Camera2D
 
 @export var target: Player
 @export var target_offset: Vector2
-@export var speed: float = 150
+@export var speed: float = 300
 
 
 func _process(delta: float) -> void:
@@ -14,4 +14,4 @@ func _process(delta: float) -> void:
 
 			return
 
-	position.y = round(target.position.y + target_offset.y)
+	position.y = move_toward(position.y, target.position.y + target_offset.y, speed * delta)
