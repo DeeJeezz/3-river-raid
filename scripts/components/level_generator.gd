@@ -23,12 +23,14 @@ const WRAP_CHUNK_OFFSET: int = 2
 @export_group("River settings")
 @export var min_river_width: int = 14
 @export var max_river_width: int = 20
+@export var min_chunks_to_spawn_bridge: int = 4
+@export var max_chunks_to_spawn_bridge: int = 8
 @export_group("Segment settings")
 @export var min_segment_length: int = 4
 @export var max_segment_length: int = 16
 
 @export_category("Spawner settings")
-@export var enemy_spawner: EnemySpawner
+@export var entity_spawner: EntitySpawner
 @export var do_not_spawn_until_row: int = 30
 @export var spawn_threshold_rows: int = 8
 @export_group("River enemies")
@@ -44,6 +46,7 @@ var _preloaded_rows_on_y: int
 var _tile_map_width: int
 var _tile_map_height: int
 
+var _chunks_to_spawn_bridge: int
 var _segment_rows_left: int = 0
 var _enemy_spawned_last_row: int = 0
 
@@ -61,12 +64,7 @@ func _ready() -> void:
 	_tile_map_height = ceili(Constants.SCREEN_SIZE.y / Constants.TILE_SIZE)
 	_river_center = floori(_tile_map_width * 0.5)
 	_river_width = randi_range(min_river_width, max_river_width)
-
-	# On level ready preload rows starting from -2 "y" coord.
-	_preload_chunk(-1)
-
-	#_generate_chunk(_tile_map_height)
-	##_generate_chunk(_tile_map_height - chunk_size)
+	_chunks_to_spawn_bridge = randi_range(min_chunks_to_spawn_bridge, max_chunks_to_spawn_bridge)
 
 	for y in range(_tile_map_height, -1, -chunk_size):
 		_generate_chunk(y)
@@ -97,6 +95,13 @@ func _check_need_to_delete_rows() -> void:
 
 
 func _generate_chunk(start_y: int) -> void:
+	_chunks_to_spawn_bridge -= 1
+	
+	if _chunks_to_spawn_bridge == 0:
+		_chunks_to_spawn_bridge = randi_range(min_chunks_to_spawn_bridge, max_chunks_to_spawn_bridge)
+		entity_spawner.spawn_bridge(tile_map.map_to_local(Vector2(_river_center, start_y)).round())
+		
+	
 	var water_coords: Array[Vector2i] = []
 	var ground_coords: Array[Vector2i] = []
 	for y in range(start_y + WRAP_CHUNK_OFFSET, start_y - chunk_size, -1):
@@ -158,7 +163,7 @@ func _maybe_spawn_content(y: int, left: int, right: int) -> void:
 		# Rotate boat if it closer to right shore.
 		if boat_position.x > tile_map.map_to_local(Vector2(_river_center, y)).x:
 			boat_rotation = 180.0
-		enemy_spawner.spawn_boat(boat_position, boat_rotation)
+		entity_spawner.spawn_boat(boat_position, boat_rotation)
 		prints("Spawned boat: ", tile_map_boat_position)
 		_enemy_spawned_last_row = spawn_threshold_rows
 	elif maybe_spawn >= boat_possibility and maybe_spawn < boat_possibility + helicopter_possibility:
@@ -168,7 +173,7 @@ func _maybe_spawn_content(y: int, left: int, right: int) -> void:
 		# Rotate helicopter if it closer to right shore.
 		if helicopter_position.x > tile_map.map_to_local(Vector2(_river_center, y)).x:
 			helicopter_rotation = 180.0
-		enemy_spawner.spawn_helicopter(helicopter_position, helicopter_rotation)
+		entity_spawner.spawn_helicopter(helicopter_position, helicopter_rotation)
 		prints("Spawned helicopter: ", tile_map_heli_position)
 		_enemy_spawned_last_row = spawn_threshold_rows
 

@@ -199,11 +199,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vyb7"]
 size = Vector2(34, 21)
 
-[node name="Player" type="Area2D" unique_id=811327754 groups=["Player"]]
+[node name="Player" type="Area2D" unique_id=811327754 node_paths=PackedStringArray("shooting_timer") groups=["Player"]]
 collision_layer = 2
 script = ExtResource("1_3vyb7")
 bullet_scene = ExtResource("2_dqkch")
 shoot_cooldown = 0.4
+shooting_timer = NodePath("ShootingTimer")
 
 [node name="Plane" type="AnimatedSprite2D" parent="." unique_id=1137419039]
 sprite_frames = SubResource("SpriteFrames_6c3st")
@@ -223,6 +224,9 @@ position = Vector2(0, -2.5)
 shape = SubResource("RectangleShape2D_3vyb7")
 
 [node name="Explosion" parent="." unique_id=1450720340 instance=ExtResource("3_qhqgy")]
+
+[node name="ShootingTimer" type="Timer" parent="." unique_id=1492402351]
+one_shot = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

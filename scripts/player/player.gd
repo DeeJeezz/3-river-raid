@@ -13,6 +13,7 @@ const DEFAULT_ANIMATION_SPEED: float = 1.0
 @export_category("Shooting settings")
 @export var bullet_scene: PackedScene
 @export_range(0, 5, 0.05) var shoot_cooldown: float = 0.75
+@export var shooting_timer: Timer
 @export_category("Animation settings")
 @export var return_to_idle_animation_speed: float = -3.0
 @export var acceleration_animation_speed: float = 3.0
@@ -35,6 +36,7 @@ func _ready() -> void:
 	_speed = vertical_speed
 	_target_speed = _speed
 	plane_sprite.play(&"idle")
+	shooting_timer.timeout.connect(func (): _can_shoot = true)
 
 
 func _process(delta: float) -> void:
@@ -43,6 +45,7 @@ func _process(delta: float) -> void:
 
 
 func destroy() -> void:
+	shooting_timer.stop()
 	_can_shoot = false
 	collision_shape.set_deferred(&"disabled", true)
 	_speed = 0
@@ -113,7 +116,7 @@ func _shoot() -> void:
 	bullet.position.y -= 10
 	get_tree().current_scene.add_child(bullet)
 	_can_shoot = false
-	get_tree().create_timer(shoot_cooldown).timeout.connect(func(): _can_shoot = true)
+	shooting_timer.start(shoot_cooldown)
 
 
 func _change_speed(delta: float) -> void:
