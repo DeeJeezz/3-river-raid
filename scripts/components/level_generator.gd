@@ -95,12 +95,8 @@ func _check_need_to_delete_rows() -> void:
 
 
 func _generate_chunk(start_y: int) -> void:
-	_chunks_to_spawn_bridge -= 1
 	
-	if _chunks_to_spawn_bridge == 0:
-		_chunks_to_spawn_bridge = randi_range(min_chunks_to_spawn_bridge, max_chunks_to_spawn_bridge)
-		entity_spawner.spawn_bridge(tile_map.map_to_local(Vector2(_river_center, start_y)).round())
-		
+	_chunks_to_spawn_bridge -= 1
 	
 	var water_coords: Array[Vector2i] = []
 	var ground_coords: Array[Vector2i] = []
@@ -148,6 +144,14 @@ func _maybe_spawn_content(y: int, left: int, right: int) -> void:
 	# Not spawning enemies close to each other.
 	if _enemy_spawned_last_row > 0:
 		_enemy_spawned_last_row -= 1
+		return
+		
+	# Check if we can spawn bridge.
+	if _chunks_to_spawn_bridge == 0:
+		entity_spawner.spawn_bridge(tile_map.map_to_local(Vector2(_river_center, y)).round())
+		_chunks_to_spawn_bridge = randi_range(min_chunks_to_spawn_bridge, max_chunks_to_spawn_bridge)
+		# Not spawning enemies close to the bridge.
+		_enemy_spawned_last_row = spawn_threshold_rows
 		return
 
 	# Not spawning enemies at the start of the level.
