@@ -22,3 +22,11 @@ func _on_enemy_destroyed(enemy: BaseEnemy) -> void:
 func _on_tick_passed() -> void:
 	fuel -= Constants.FUEL_PER_TICK
 	score += Constants.SCORE_PER_TICK
+
+	if fuel <= 0:
+		Signals.game_over.emit()
+
+
+func reset() -> void:
+	fuel = Constants.MAX_FUEL
+	score = 0

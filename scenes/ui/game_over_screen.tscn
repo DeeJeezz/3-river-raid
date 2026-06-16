@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://c1wrm345kc12n"]
+
+[ext_resource type="Script" uid="uid://bmclu51w0sd66" path="res://scripts/ui/game_over_screen.gd" id="1_dnrai"]
+[ext_resource type="FontFile" uid="uid://c0ma0shmh2qng" path="res://assets/fonts/OptionB_SuperstarMemesbruh03.ttf" id="2_sopbp"]
+[ext_resource type="Script" uid="uid://cl6on44v5u105" path="res://scripts/components/ui/pulsating_label.gd" id="3_bllgf"]
+[ext_resource type="Theme" uid="uid://ciglotwmlxfdb" path="res://resources/ui_theme.tres" id="4_ndg0r"]
+[ext_resource type="Script" uid="uid://bf68cukuvqu5s" path="res://scripts/components/ui/animated_button.gd" id="5_q5i70"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sopbp"]
+bg_color = Color(0.1584723, 0.15847233, 0.1584723, 0.78431374)
+
+[node name="GameOverScreen" type="CanvasLayer" unique_id=557665363 node_paths=PackedStringArray("score_label")]
+script = ExtResource("1_dnrai")
+score_label = NodePath("BackgroundPanel/ScoreLabel")
+
+[node name="BackgroundPanel" type="Panel" parent="." unique_id=983223445]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sopbp")
+
+[node name="GameOverLabel" type="Label" parent="BackgroundPanel" unique_id=1767337533]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.0
+offset_top = -80.0
+offset_right = 138.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.64400005)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 4
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = ExtResource("2_sopbp")
+theme_override_font_sizes/font_size = 64
+text = "Game Over"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_bllgf")
+pulse_duraion = 0.5
+pulse_color = Color(0.7875421, 4.1633098e-06, 5.7756904e-07, 1)
+
+[node name="ScoreLabel" type="Label" parent="BackgroundPanel" unique_id=557712503]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -11.5
+offset_right = 40.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.92099476, 0.9209946, 0.9209946, 1)
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = ExtResource("2_sopbp")
+theme_override_font_sizes/font_size = 20
+text = "Score: 1111"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BackgroundPanel" unique_id=1747854779]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -91.0
+offset_top = 30.0
+offset_right = 91.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RestartButton" type="Button" parent="BackgroundPanel/VBoxContainer" unique_id=140224115]
+layout_mode = 2
+theme = ExtResource("4_ndg0r")
+theme_type_variation = &"Red"
+text = "Restart"
+script = ExtResource("5_q5i70")
+metadata/_custom_type_script = "uid://bf68cukuvqu5s"
+
+[node name="Divider" type="Control" parent="BackgroundPanel/VBoxContainer" unique_id=1808296773]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+
+[node name="MainMenuButton" type="Button" parent="BackgroundPanel/VBoxContainer" unique_id=2108193190]
+layout_mode = 2
+theme = ExtResource("4_ndg0r")
+theme_type_variation = &"Normal"
+text = "Main menu"
+script = ExtResource("5_q5i70")
+metadata/_custom_type_script = "uid://bf68cukuvqu5s"
+
+[connection signal="button_down" from="BackgroundPanel/VBoxContainer/RestartButton" to="." method="_on_restart_button_button_down"]
+[connection signal="button_down" from="BackgroundPanel/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_button_down"]

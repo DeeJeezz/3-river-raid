@@ -2,6 +2,7 @@ extends Node
 
 # Core signals.
 signal scene_change(scene_path: String)
+signal game_over
 
 # Player signals.
 signal tick_passed

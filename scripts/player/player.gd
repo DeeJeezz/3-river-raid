@@ -39,13 +39,11 @@ func _ready() -> void:
 	_target_speed = _speed
 	plane_sprite.play(&"idle")
 	shooting_timer.timeout.connect(func (): _can_shoot = true)
-	Signals.fuel_changed.connect(_on_fuel_changed)
+	Signals.game_over.connect(_on_game_over)
 	
 	
-func _on_fuel_changed(value: int) -> void:
-	if value <= 0:
-		prints('Player', Session.fuel)
-		destroy()
+func _on_game_over() -> void:
+	destroy()
 
 
 func _process(delta: float) -> void:
@@ -166,8 +164,8 @@ func _clamp_position() -> void:
 
 
 func _on_body_entered(_body: Node2D) -> void:
-	destroy()
+	Signals.game_over.emit()
 
 
 func _on_area_entered(_area: Area2D) -> void:
-	destroy()
+	Signals.game_over.emit()

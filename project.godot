@@ -47,6 +47,7 @@ enabled=PackedStringArray("res://addons/project_doctor_mini/plugin.cfg", "res://
 
 folder_colors={
 "res://assets/": "blue",
+"res://debug/": "pink",
 "res://scenes/": "yellow",
 "res://scripts/": "red"
 }

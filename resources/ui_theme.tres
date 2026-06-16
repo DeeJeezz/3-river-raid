@@ -45,9 +45,61 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m7jai"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.91346747, 0.0871542, 0.23955801, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = 2
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ufndy"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.7688558, 0.050302863, 0.1905905, 1)
+border_width_bottom = 2
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ybqih"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.9866521, 0.20462754, 0.29953787, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [resource]
-Button/font_sizes/font_size = 24
-Button/fonts/font = ExtResource("1_cviax")
-Button/styles/hover = SubResource("StyleBoxFlat_cviax")
-Button/styles/normal = SubResource("StyleBoxFlat_yl303")
-Button/styles/pressed = SubResource("StyleBoxFlat_qosx5")
+Normal/base_type = &"Button"
+Normal/constants/outline_size = 1
+Normal/font_sizes/font_size = 24
+Normal/fonts/font = ExtResource("1_cviax")
+Normal/styles/hover = SubResource("StyleBoxFlat_cviax")
+Normal/styles/normal = SubResource("StyleBoxFlat_yl303")
+Normal/styles/pressed = SubResource("StyleBoxFlat_qosx5")
+Red/base_type = &"Button"
+Red/constants/outline_size = 1
+Red/font_sizes/font_size = 24
+Red/fonts/font = ExtResource("1_cviax")
+Red/styles/hover = SubResource("StyleBoxFlat_m7jai")
+Red/styles/normal = SubResource("StyleBoxFlat_ufndy")
+Red/styles/pressed = SubResource("StyleBoxFlat_ybqih")
