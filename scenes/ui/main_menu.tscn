@@ -44,6 +44,10 @@
 [ext_resource type="Texture2D" uid="uid://jdi5ay5c5cih" path="res://assets/img/entities/plane/turn_right/013.png" id="38_0be2p"]
 [ext_resource type="Texture2D" uid="uid://j4jbqavebkfb" path="res://assets/img/entities/plane/turn_right/014.png" id="39_2gcuk"]
 [ext_resource type="Texture2D" uid="uid://1qbmvlcbldle" path="res://assets/img/entities/plane/turn_right/015.png" id="40_ajim5"]
+[ext_resource type="Texture2D" uid="uid://bsaf5q8py5pmy" path="res://resources/a_key.tres" id="41_hr2v7"]
+[ext_resource type="FontFile" uid="uid://cq6dtphnagqhu" path="res://assets/fonts/OptionC_UpheavalPro.otf" id="42_t4suy"]
+[ext_resource type="Texture2D" uid="uid://dplfsps8ncgxs" path="res://resources/d_key.tres" id="43_xupgs"]
+[ext_resource type="Texture2D" uid="uid://bl2hd88qqsn6d" path="res://resources/space_key.tres" id="44_t4suy"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0e3hr"]
 animations = [{
@@ -199,6 +203,8 @@ animations = [{
 "speed": 16.0
 }]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iglv2"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m1kxf"]
 
 [sub_resource type="Animation" id="Animation_d24t5"]
@@ -270,6 +276,62 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.40887478, 0.40887544, 0.40887514, 0.101960786)
+
+[node name="HintsPanel" type="Panel" parent="ColorRect" unique_id=1877832625]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 76.0
+offset_top = -64.0
+offset_right = 257.0
+offset_bottom = -10.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_iglv2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/HintsPanel" unique_id=2043770451]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/HintsPanel/VBoxContainer" unique_id=1219254821]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect/HintsPanel/VBoxContainer/HBoxContainer" unique_id=166904005]
+layout_mode = 2
+texture = ExtResource("41_hr2v7")
+
+[node name="Label" type="Label" parent="ColorRect/HintsPanel/VBoxContainer/HBoxContainer" unique_id=264579765]
+layout_mode = 2
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("42_t4suy")
+text = "- Left"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/HintsPanel/VBoxContainer" unique_id=698685245]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect/HintsPanel/VBoxContainer/HBoxContainer2" unique_id=1884354546]
+layout_mode = 2
+texture = ExtResource("43_xupgs")
+
+[node name="Label" type="Label" parent="ColorRect/HintsPanel/VBoxContainer/HBoxContainer2" unique_id=210026831]
+layout_mode = 2
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("42_t4suy")
+text = "- Right"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/HintsPanel/VBoxContainer" unique_id=368512056]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect/HintsPanel/VBoxContainer/HBoxContainer3" unique_id=444810588]
+layout_mode = 2
+texture = ExtResource("44_t4suy")
+
+[node name="Label" type="Label" parent="ColorRect/HintsPanel/VBoxContainer/HBoxContainer3" unique_id=147148105]
+layout_mode = 2
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("42_t4suy")
+text = "- FIRE"
 
 [node name="MenuPanel" type="Panel" parent="ColorRect" unique_id=1042232946]
 layout_mode = 1
