@@ -1,6 +1,6 @@
 @tool
 class_name Boat
-extends Area2D
+extends BaseEnemy
 
 @export_enum("1", "2", "3") var boat_color: String = "1":
 	set(value):
@@ -14,15 +14,8 @@ extends Area2D
 		cannon_sprite.rotation_degrees = cannon_rotation
 @export_range(0, 1, 0.005) var cannon_rotation_speed: float = 0.025
 
-var _destroying: bool = false
-
-@onready var explosion: Explosion = $Explosion
-@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var boat_sprite: AnimatedSprite2D = $Boat
 @onready var cannon_sprite: AnimatedSprite2D = $Boat/Cannon
-
-
-var _target: Player
 
 
 func _ready() -> void:
@@ -31,8 +24,7 @@ func _ready() -> void:
 
 	boat_color = Utils.get_random_animation_name(boat_sprite)
 	boat_sprite.play()
-	
-	_target = get_tree().get_first_node_in_group(Constants.PLAYER_GROUP_NAME)
+	super._ready()
 
 
 func _process(_delta: float) -> void:
@@ -46,22 +38,3 @@ func _process(_delta: float) -> void:
 			cannon_rotation_speed,
 		),
 	)
-
-
-func _destroy() -> void:
-	if _destroying:
-		return
-	boat_sprite.hide()
-	_destroying = true
-	collision_shape.set_deferred(&"disabled", true)
-	explosion.play_random_explosion()
-	explosion.animation_finished.connect(queue_free)
-
-
-func _on_area_entered(area: Area2D) -> void:
-	if area is Bullet:
-		_destroy()
-
-
-func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	queue_free()

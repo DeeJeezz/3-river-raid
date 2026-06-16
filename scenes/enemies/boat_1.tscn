@@ -163,10 +163,14 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="Boat1" type="Area2D" unique_id=1141433055]
+[node name="Boat1" type="Area2D" unique_id=1141433055 node_paths=PackedStringArray("sprite", "collision_shape", "explosion", "visible_on_screen_notifier")]
 collision_layer = 5
 collision_mask = 8
 script = ExtResource("1_c7bf6")
+sprite = NodePath("Boat")
+collision_shape = NodePath("CollisionShape2D")
+explosion = NodePath("Explosion")
+visible_on_screen_notifier = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=612316807]
 rect = Rect2(-13, -6, 26, 12)
@@ -201,6 +205,3 @@ frame = 3
 frame_progress = 1.0
 
 [node name="Explosion" parent="." unique_id=1450720340 instance=ExtResource("6_35h0e")]
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://b3dqia7ofycc0" path="res://scenes/enemies/boat_4.tscn" id="6_plydf"]
 [ext_resource type="PackedScene" uid="uid://dcng1ud64y4cx" path="res://scenes/enemies/helicopter_1.tscn" id="10_5ntmo"]
 [ext_resource type="PackedScene" uid="uid://b57iqu7ibg5dn" path="res://scenes/bridge.tscn" id="11_nfihu"]
+[ext_resource type="Script" uid="uid://v8qd8q8y2pyf" path="res://scripts/ui/hud.gd" id="13_jprdt"]
+[ext_resource type="FontFile" uid="uid://c0ma0shmh2qng" path="res://assets/fonts/OptionB_SuperstarMemesbruh03.ttf" id="13_lgguw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1seuy"]
 shader = ExtResource("4_1seuy")
@@ -19,6 +21,25 @@ shader_parameter/alpha = 0.5
 shader_parameter/half_size = Vector2(0.41, 0.44)
 shader_parameter/corner_radius = 0.0
 shader_parameter/feather = 0.15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jprdt"]
+bg_color = Color(0, 0, 0, 1)
+draw_center = false
+
+[sub_resource type="Gradient" id="Gradient_lgguw"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.9047233, 0.12884161, 0.28163305, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jprdt"]
+gradient = SubResource("Gradient_lgguw")
+
+[sub_resource type="Gradient" id="Gradient_ps2vj"]
+offsets = PackedFloat32Array(0.9892996)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sbmf2"]
+gradient = SubResource("Gradient_ps2vj")
+width = 1
 
 [node name="Level1" type="Node2D" unique_id=213759439]
 
@@ -30,6 +51,7 @@ camera = NodePath("../Camera2D")
 tile_map = NodePath("../Ground")
 seed_label = NodePath("../CanvasLayer/SeedLabel")
 random_seed = true
+delete_after_rows = 16
 min_river_width = 10
 max_river_width = 16
 max_chunks_to_spawn_bridge = 12
@@ -40,10 +62,10 @@ helicopter_possibility = 0.1
 position = Vector2(320, 180)
 limit_enabled = false
 position_smoothing_enabled = true
-position_smoothing_speed = 3.0
+position_smoothing_speed = 2.0
 script = ExtResource("3_dd0lh")
 target = NodePath("../Player")
-target_offset = Vector2(0, -180)
+target_offset = Vector2(0, -200)
 
 [node name="Player" parent="." unique_id=811327754 instance=ExtResource("4_bfxgj")]
 position = Vector2(320, 336)
@@ -84,5 +106,79 @@ visible = false
 offset_right = 8.0
 offset_bottom = 8.0
 text = "Load"
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1099335257 node_paths=PackedStringArray("score_label", "fuel_progress_bar")]
+script = ExtResource("13_jprdt")
+score_label = NodePath("Panel/ScoreHBoxContainer/ScoreTextLabel2")
+fuel_progress_bar = NodePath("Panel/FuelProgressBar")
+fuel_animation_duration = 0.75
+
+[node name="Panel" type="Panel" parent="HUD" unique_id=823480530]
+custom_minimum_size = Vector2(0, 32)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_jprdt")
+
+[node name="ScoreHBoxContainer" type="HBoxContainer" parent="HUD/Panel" unique_id=957108088]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = 113.0
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="ScoreTextLabel" type="Label" parent="HUD/Panel/ScoreHBoxContainer" unique_id=958713823]
+layout_mode = 2
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("13_lgguw")
+theme_override_font_sizes/font_size = 24
+text = "Score:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreTextLabel2" type="Label" parent="HUD/Panel/ScoreHBoxContainer" unique_id=1139896259]
+layout_mode = 2
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("13_lgguw")
+theme_override_font_sizes/font_size = 24
+text = "1111"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FuelProgressBar" type="TextureProgressBar" parent="HUD/Panel" unique_id=1415783751]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 8.0
+offset_right = 625.0
+offset_bottom = 24.0
+value = 12.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_jprdt")
+texture_progress = SubResource("GradientTexture1D_sbmf2")
+
+[node name="Label" type="Label" parent="HUD/Panel/FuelProgressBar" unique_id=1955764505]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.9680101, 0, 0.25817218, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("13_lgguw")
+text = "FUEL"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="button_down" from="CanvasLayer/Button" to="LevelGenerator" method="_on_button_button_down"]

@@ -25,6 +25,7 @@ config/icon="uid://3uw3rhogysj6"
 Constants="*uid://d3id0lpsleymt"
 Utils="*uid://chhu2q7b77x68"
 Signals="*uid://d4in0u8oe8pms"
+Session="*uid://cf1gvjbd0j3op"
 
 [debug]
 

@@ -23,6 +23,7 @@ const DEFAULT_ANIMATION_SPEED: float = 1.0
 var _can_shoot: bool = true
 var _target_speed: float
 var _speed: float
+var _previous_captured_position_y: float
 var _previous_direction: float = 0
 var _current_animation_speed: float = DEFAULT_ANIMATION_SPEED
 
@@ -33,6 +34,7 @@ var _current_animation_speed: float = DEFAULT_ANIMATION_SPEED
 
 
 func _ready() -> void:
+	_previous_captured_position_y = position.y
 	_speed = vertical_speed
 	_target_speed = _speed
 	plane_sprite.play(&"idle")
@@ -104,6 +106,12 @@ func _move(direction: float, delta: float) -> void:
 		position.y += _speed * delta * vertical_direction
 	else:
 		position.y -= _speed * delta
+		if abs(abs(position.y) - abs(_previous_captured_position_y)) >= 100:
+			Signals.tick_passed.emit()
+			_previous_captured_position_y = position.y
+			if Session.fuel <= 0:
+				_target_speed = 0
+				vertical_speed = 0
 
 	_clamp_position()
 
