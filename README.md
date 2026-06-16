@@ -3,7 +3,7 @@
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/deejeezz/3-river-raid/deploy.yaml)
 ![GitHub Tag](https://img.shields.io/github/v/tag/deejeezz/3-river-raid)
 
-https://20_games_challenge.gitlab.io/games/river-raid/
+https://20_games_challenge.gitlab.io/games/river_raid/
 
 ## Where to play
 
