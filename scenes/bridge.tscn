@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://b57iqu7ibg5dn"]
 
-[ext_resource type="Texture2D" uid="uid://xmmj22dyoy5f" path="res://assets/img/world/Bridges.png" id="1_7ct4w"]
 [ext_resource type="Script" uid="uid://fjfx417gat4w" path="res://scripts/bridge.gd" id="1_im2sa"]
+[ext_resource type="Texture2D" uid="uid://bgivw8rnik7sj" path="res://assets/img/world/new_bridge.png" id="2_1q54l"]
 [ext_resource type="PackedScene" uid="uid://dyj1255yixoff" path="res://scenes/components/explosion.tscn" id="3_1q54l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7ct4w"]
-size = Vector2(128, 72)
+size = Vector2(217, 206)
 
 [node name="Bridge" type="Area2D" unique_id=379837550]
 collision_layer = 5
@@ -13,14 +13,68 @@ collision_mask = 8
 script = ExtResource("1_im2sa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=310403364]
+position = Vector2(-2.5, 0)
 shape = SubResource("RectangleShape2D_7ct4w")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1002495296]
-texture = ExtResource("1_7ct4w")
+position = Vector2(-98, 0)
+texture = ExtResource("2_1q54l")
 region_enabled = true
-region_rect = Rect2(84, 130, 103, 66)
+region_rect = Rect2(0, 8, 31, 208)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D" unique_id=1597720819]
+position = Vector2(188, 0)
+texture = ExtResource("2_1q54l")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(0, 8, 31, 208)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Sprite2D" unique_id=124555554]
+position = Vector2(32, 0)
+texture = ExtResource("2_1q54l")
+offset = Vector2(5, 5)
+region_enabled = true
+region_rect = Rect2(106, 57, 43, 120)
+
+[node name="Sprite2D4" type="Sprite2D" parent="Sprite2D" unique_id=1248651036]
+position = Vector2(75, 0)
+texture = ExtResource("2_1q54l")
+offset = Vector2(5, 5)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(106, 57, 43, 120)
+
+[node name="Sprite2D5" type="Sprite2D" parent="Sprite2D" unique_id=1804890601]
+position = Vector2(106, 0)
+texture = ExtResource("2_1q54l")
+offset = Vector2(5, 5)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(106, 57, 43, 120)
+
+[node name="Sprite2D7" type="Sprite2D" parent="Sprite2D" unique_id=2093805213]
+position = Vector2(146, 0)
+texture = ExtResource("2_1q54l")
+offset = Vector2(5, 5)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(106, 57, 43, 120)
+
+[node name="Sprite2D6" type="Sprite2D" parent="Sprite2D" unique_id=1381735421]
+position = Vector2(64, 83)
+texture = ExtResource("2_1q54l")
+region_enabled = true
+region_rect = Rect2(46, 256, 37, 37)
+
+[node name="Sprite2D8" type="Sprite2D" parent="Sprite2D" unique_id=2028744019]
+position = Vector2(128, 83)
+texture = ExtResource("2_1q54l")
+region_enabled = true
+region_rect = Rect2(46, 256, 37, 37)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1681137500]
+position = Vector2(0, -93)
+show_rect = false
 
 [node name="Explosion" parent="." unique_id=1450720340 instance=ExtResource("3_1q54l")]
 

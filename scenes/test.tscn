@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://bb4vb8agwuhg4" path="res://assets/img/world/topdown.png" id="1_bl13t"]
 [ext_resource type="PackedScene" uid="uid://b57iqu7ibg5dn" path="res://scenes/bridge.tscn" id="2_iyx0m"]
+[ext_resource type="PackedScene" uid="uid://cpgnsf3ny0nf4" path="res://scenes/player.tscn" id="3_iyx0m"]
+[ext_resource type="PackedScene" uid="uid://bqaqimobryvav" path="res://scenes/pickable/fuel_barrel.tscn" id="4_74lek"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_74lek"]
 texture = ExtResource("1_bl13t")
@@ -197,3 +199,10 @@ tile_set = SubResource("TileSet_j5jx5")
 
 [node name="Bridge" parent="." unique_id=379837550 instance=ExtResource("2_iyx0m")]
 position = Vector2(352, 88)
+
+[node name="Player" parent="." unique_id=811327754 instance=ExtResource("3_iyx0m")]
+position = Vector2(354, 319)
+debug_controls = true
+
+[node name="FuelBarrel" parent="." unique_id=99310462 instance=ExtResource("4_74lek")]
+position = Vector2(344, 235)

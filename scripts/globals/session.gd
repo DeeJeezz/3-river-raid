@@ -3,7 +3,7 @@ extends Node
 var fuel: int = Constants.MAX_FUEL:
 	set(value):
 		fuel = value
-		Signals.fuel_changed.emit()
+		Signals.fuel_changed.emit(value)
 var score: int = 0:
 	set(value):
 		score = value

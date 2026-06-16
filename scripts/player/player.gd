@@ -39,6 +39,13 @@ func _ready() -> void:
 	_target_speed = _speed
 	plane_sprite.play(&"idle")
 	shooting_timer.timeout.connect(func (): _can_shoot = true)
+	Signals.fuel_changed.connect(_on_fuel_changed)
+	
+	
+func _on_fuel_changed(value: int) -> void:
+	if value <= 0:
+		prints('Player', Session.fuel)
+		destroy()
 
 
 func _process(delta: float) -> void:
@@ -109,9 +116,6 @@ func _move(direction: float, delta: float) -> void:
 		if abs(abs(position.y) - abs(_previous_captured_position_y)) >= 100:
 			Signals.tick_passed.emit()
 			_previous_captured_position_y = position.y
-			if Session.fuel <= 0:
-				_target_speed = 0
-				vertical_speed = 0
 
 	_clamp_position()
 

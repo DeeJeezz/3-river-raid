@@ -11,4 +11,4 @@ signal enemy_destroyed(enemy: Area2D)
 
 # UI signals.
 signal score_changed
-signal fuel_changed
+signal fuel_changed (value: int)

@@ -39,6 +39,8 @@ const WRAP_CHUNK_OFFSET: int = 2
 @export_group("Air enemies")
 @export_subgroup("Helicopters", "helicopter")
 @export_range(0, 1, 0.01) var helicopter_possibility: float = 0.2
+@export_group("Pickable")
+@export_range(0, 1, 0.01) var fuel_barrel_possibility: float = 0.2
 
 var _river_center: int
 var _river_width: int
@@ -180,6 +182,11 @@ func _maybe_spawn_content(y: int, left: int, right: int) -> void:
 		entity_spawner.spawn_helicopter(helicopter_position, helicopter_rotation)
 		prints("Spawned helicopter: ", tile_map_heli_position)
 		_enemy_spawned_last_row = spawn_threshold_rows
+	elif maybe_spawn >= boat_possibility + helicopter_possibility and maybe_spawn < boat_possibility + helicopter_possibility + fuel_barrel_possibility:
+		var tile_map_fuel_barrel_position: Vector2 = Vector2(randi_range(left + 2, right - 2), y)
+		var barrel_position: Vector2 = tile_map.map_to_local(tile_map_fuel_barrel_position).round()
+		entity_spawner.spawn_fuel_barrel(barrel_position)
+		prints("Spawned fuel barrel: ", tile_map_fuel_barrel_position)
 
 
 func _on_button_button_down() -> void:

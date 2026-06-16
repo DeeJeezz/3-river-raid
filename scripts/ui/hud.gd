@@ -22,9 +22,8 @@ func _on_score_changed() -> void:
 	tween.tween_method(_set_score_label_value, int(score_label.text), Session.score, score_animation_duration)
 
 
-func _on_fuel_changed() -> void:
-	var tween: Tween = create_tween()
-	tween.tween_method(_set_fuel_progress_bar_value, fuel_progress_bar.value, Session.fuel, fuel_animation_duration)
+func _on_fuel_changed(value: int) -> void:
+	_set_fuel_progress_bar_value(value)
 
 	
 func _set_fuel_progress_bar_value(value: int) -> void:

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bqaqimobryvav"]
+
+[ext_resource type="Script" uid="uid://dpjspcm6pi2kg" path="res://scripts/pickable/fuel_barrel.gd" id="1_ogosp"]
+[ext_resource type="Texture2D" uid="uid://cdph7bpixey25" path="res://assets/img/entities/barrel oil.png" id="2_876ip"]
+[ext_resource type="PackedScene" uid="uid://dyj1255yixoff" path="res://scenes/components/explosion.tscn" id="3_30q85"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_30q85"]
+size = Vector2(20, 29)
+
+[node name="FuelBarrel" type="Area2D" unique_id=99310462]
+collision_layer = 4
+collision_mask = 10
+script = ExtResource("1_ogosp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1670919455]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_30q85")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=485000765]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_876ip")
+
+[node name="Explosion" parent="." unique_id=1450720340 instance=ExtResource("3_30q85")]
