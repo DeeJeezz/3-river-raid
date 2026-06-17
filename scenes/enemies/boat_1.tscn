@@ -163,14 +163,15 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="Boat1" type="Area2D" unique_id=1141433055 node_paths=PackedStringArray("sprite", "collision_shape", "explosion", "visible_on_screen_notifier")]
+[node name="Boat1" type="Area2D" unique_id=847847759 node_paths=PackedStringArray("sprite", "collision_shape", "explosion", "visible_on_screen_notifier")]
 collision_layer = 5
 collision_mask = 8
 script = ExtResource("1_c7bf6")
-sprite = NodePath("Boat")
+sprite = NodePath("Sprites")
 collision_shape = NodePath("CollisionShape2D")
 explosion = NodePath("Explosion")
 visible_on_screen_notifier = NodePath("VisibleOnScreenNotifier2D")
+metadata/_custom_type_script = "uid://d4l42sykx4lpv"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=612316807]
 rect = Rect2(-13, -6, 26, 12)
@@ -178,30 +179,32 @@ rect = Rect2(-13, -6, 26, 12)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=937310278]
 shape = SubResource("RectangleShape2D_mkwoy")
 
-[node name="Boat" type="AnimatedSprite2D" parent="." unique_id=187666675]
+[node name="Explosion" parent="." unique_id=1450720340 instance=ExtResource("6_35h0e")]
+
+[node name="Sprites" type="Node2D" parent="." unique_id=2024383054]
+
+[node name="Boat" type="AnimatedSprite2D" parent="Sprites" unique_id=187666675]
 position = Vector2(-1.2037062e-35, 1.435e-42)
 rotation = -1.5707964
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_avrbf")
 animation = &"1"
 
-[node name="Shadow" type="Sprite2D" parent="Boat" unique_id=985096441]
+[node name="Shadow" type="Sprite2D" parent="Sprites/Boat" unique_id=985096441]
 show_behind_parent = true
 position = Vector2(-7.999999, -8.000001)
 scale = Vector2(0.99999994, 0.99999994)
 texture = ExtResource("2_2cytg")
 
-[node name="Cannon" type="AnimatedSprite2D" parent="Boat" unique_id=974831788]
+[node name="Cannon" type="AnimatedSprite2D" parent="Sprites/Boat" unique_id=974831788]
 position = Vector2(0, -6)
 sprite_frames = SubResource("SpriteFrames_pqjjq")
 animation = &"1"
 offset = Vector2(2, 20)
 
-[node name="CannonShadow" type="AnimatedSprite2D" parent="Boat/Cannon" unique_id=1484214704]
+[node name="CannonShadow" type="AnimatedSprite2D" parent="Sprites/Boat/Cannon" unique_id=1484214704]
 show_behind_parent = true
 position = Vector2(-4.000001, 18)
 sprite_frames = SubResource("SpriteFrames_fdc6b")
 frame = 3
 frame_progress = 1.0
-
-[node name="Explosion" parent="." unique_id=1450720340 instance=ExtResource("6_35h0e")]

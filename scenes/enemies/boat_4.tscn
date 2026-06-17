@@ -163,7 +163,7 @@ animations = [{
 collision_layer = 5
 collision_mask = 8
 script = ExtResource("1_3iqaa")
-sprite = NodePath("Boat")
+sprite = NodePath("Sprites")
 collision_shape = NodePath("CollisionShape2D")
 explosion = NodePath("Explosion")
 visible_on_screen_notifier = NodePath("VisibleOnScreenNotifier2D")
@@ -174,26 +174,28 @@ rect = Rect2(-14, -8, 28, 16)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=937310278]
 shape = SubResource("RectangleShape2D_mkwoy")
 
-[node name="Boat" type="AnimatedSprite2D" parent="." unique_id=187666675]
+[node name="Explosion" parent="." unique_id=1450720340 instance=ExtResource("14_5nnso")]
+
+[node name="Sprites" type="Node2D" parent="." unique_id=1646823366]
+
+[node name="Boat" type="AnimatedSprite2D" parent="Sprites" unique_id=187666675]
 rotation = -1.5707964
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_faryx")
 animation = &"1"
 
-[node name="Shadow" type="Sprite2D" parent="Boat" unique_id=1197422360]
+[node name="Shadow" type="Sprite2D" parent="Sprites/Boat" unique_id=1197422360]
 show_behind_parent = true
 position = Vector2(-8, -8.000001)
 texture = ExtResource("2_o83xl")
 
-[node name="Cannon" type="AnimatedSprite2D" parent="Boat" unique_id=717515620]
+[node name="Cannon" type="AnimatedSprite2D" parent="Sprites/Boat" unique_id=717515620]
 position = Vector2(1.7484556e-06, -40)
 sprite_frames = SubResource("SpriteFrames_d6403")
 animation = &"1"
 offset = Vector2(-0.5, 13)
 
-[node name="CannonShadow" type="AnimatedSprite2D" parent="Boat/Cannon" unique_id=1622329450]
+[node name="CannonShadow" type="AnimatedSprite2D" parent="Sprites/Boat/Cannon" unique_id=1622329450]
 show_behind_parent = true
 position = Vector2(-4, 7.9999995)
 sprite_frames = SubResource("SpriteFrames_lx82k")
-
-[node name="Explosion" parent="." unique_id=1450720340 instance=ExtResource("14_5nnso")]

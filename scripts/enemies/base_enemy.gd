@@ -24,7 +24,7 @@ func _ready() -> void:
 func _destroy() -> void:
 	if _destroying:
 		return
-	sprite.hide()
+	sprite.set_deferred("visible", false)
 	Signals.enemy_destroyed.emit(self)
 	_destroying = true
 	collision_shape.set_deferred(&"disabled", true)
