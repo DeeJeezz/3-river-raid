@@ -9,7 +9,7 @@ https://20_games_challenge.gitlab.io/games/river_raid/
 
 Itch.io - https://deejeezz.itch.io/river-raid
 
-Github Pages - https://deejeezz.github.io/river-raid/
+Github Pages - https://deejeezz.github.io/3-river-raid/
 
 ## Description
 

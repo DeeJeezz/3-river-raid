@@ -5,7 +5,7 @@ extends Area2D
 @export var score_for_destroy: int = 100
 
 @export_category("Nodes")
-@export_node_path("Sprite2D", "AnimatedSprite2D") var sprite
+@export var sprite: Node2D
 @export var collision_shape: CollisionShape2D
 @export var explosion: Explosion
 @export var visible_on_screen_notifier: VisibleOnScreenNotifier2D
@@ -20,15 +20,12 @@ func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	visible_on_screen_notifier.screen_exited.connect(_on_visible_on_screen_notifier_2d_screen_exited)
 
-	if sprite is NodePath:
-		sprite = get_node(sprite)
-
 
 func _destroy() -> void:
 	if _destroying:
 		return
-	Signals.enemy_destroyed.emit(self)
 	sprite.hide()
+	Signals.enemy_destroyed.emit(self)
 	_destroying = true
 	collision_shape.set_deferred(&"disabled", true)
 	explosion.play_random_explosion()
